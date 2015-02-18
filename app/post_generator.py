@@ -6,6 +6,7 @@ import sqlite3
 
 def generator():
     links = [
+        'http://englishnews.thaipbs.or.th/feed',
         'http://www.nationmultimedia.com/home/rss/breakingnews.rss',
         'http://www.bangkokpost.com/rss/data/most-recent.xml',
         'http://www.nationmultimedia.com/home/rss/breakingnews.rss',
