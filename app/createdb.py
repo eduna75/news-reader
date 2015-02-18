@@ -7,7 +7,7 @@ def create_db(database):
     db = sqlite3.connect(database)
     cur = db.cursor()
     cur.execute(
-        """CREATE TABLE news(id INTEGER PRIMARY KEY, title VARCHAR UNIQUE, summary VARCHAR UNIQUE, link VARCHAR UNIQUE)""")
+        """CREATE TABLE news(id INTEGER PRIMARY KEY, title VARCHAR UNIQUE, summary VARCHAR UNIQUE, link VARCHAR UNIQUE, timestamp DATETIME DEFAULT current_timestamp, publisher varchar, source varchar)""")
     db.commit()
     db.close()
 
