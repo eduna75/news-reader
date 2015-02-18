@@ -2,7 +2,35 @@
 {% block title %}Configuration platform{% endblock %}
 
 {% block content %}
-<div class="well">
+    <div class="well">
+        <div class="row">
+            <div class="col-lg-4">
+                <form class="form-group" method="post" action="">
+                    <p>insert a new rss feed URL:</p>
+                    <small>eg. http://url.torss.feed/rss</small>
+                    <br>
+                    <input type="text" name="rssurl" placeholder="http://url.to.rss" value="{{ request.form.rssurl }}">
 
-</div>
+                    <p>Name for rss feed:</p>
+                    <input type="text" name="name" placeholder="Name" value="{{ request.form.name }}">
+                    <button class="active" name="button">push me</button>
+                </form>
+                {% if error %}
+                    <div class="alert alert-danger" role="alert">{{ error }}</div>
+                {% endif %}
+            </div>
+            <div class="col-lg-8">
+                {% for url in urls %}
+                    <div class="panel panel-default">
+                        <div class="panel-heading"><p>{{ url.name }} </p></div>
+                        <div class="panel-body">
+                            <a href="{{ url.url }}" target="_blank">{{ url.url }}</a>
+                        </div>
+
+                    </div>
+
+                {% endfor %}
+            </div>
+        </div>
+    </div>
 {% endblock %}
