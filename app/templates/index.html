@@ -12,7 +12,8 @@
                         {% for p in post[length:(length -20):-1] %}
                         <a href="{{ p.link }}" class="list-group-item" target="_blank">
                             <p>{{ p.title }}</p>
-                            <small>{{ p.time }}</small>
+                            <small>Date: {{ p.time }}</small><br>
+                            <small>Source: {{ p.source }}</small><br>
                         </a>
                         {% endfor %}
                     </div>
@@ -24,7 +25,9 @@
                         {% for p in post[(length -20):(length -40):-1] %}
                         <a href="{{ p.link }}" class="list-group-item" target="_blank">
                             <p>{{ p.title }}</p>
-                            <small>{{ p.time }}</small>
+                            <small>{{ p.author }}</small>
+                            <small>Date: {{ p.time }}</small><br>
+                            <small>Source: {{ p.source }}</small><br>
                         </a>
                     {% endfor %}
                     </div>
@@ -35,11 +38,11 @@
                     <div class="list-group">
                         <a href="{{ p.link }}" class="list-group-item list-group-item-success" target="_blank">
                             <h4><p>{{ p.title }}</p></h4>
+                            <small>Date: {{ p.time }}</small>
                         </a>
 
                         <p class="list-group-item">{{ p.summary }}<br>
-                        <small>Date: {{ p.time }}</small>
-                            <small>{{ p.source }}</small>
+                            <small>Source: {{ p.source }}</small><br>
                         </p>
                         <hr>
                     </div>

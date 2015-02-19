@@ -5,7 +5,7 @@
     <div class="well">
         <div class="row">
             <div class="col-lg-4">
-                <form class="form-group" method="post" action="">
+                <form method="post" action="">
                     <p>insert a new rss feed URL:</p>
                     <small>eg. http://url.torss.feed/rss</small>
                     <br>
@@ -13,7 +13,7 @@
 
                     <p>Name for rss feed:</p>
                     <input type="text" name="name" placeholder="Name" value="{{ request.form.name }}">
-                    <button class="active" name="button">push me</button>
+                    <button class="btn-default" name="button">push me</button>
                 </form>
                 {% if error %}
                     <div class="alert alert-danger" role="alert">{{ error }}</div>
@@ -26,6 +26,9 @@
                         <div class="panel-body">
                             <a href="{{ url.url }}" target="_blank">{{ url.url }}</a>
                         </div>
+                    <form method="post" action="">
+                    <input type="button" class="btn-default" name="delete" value="delete">
+                    </form>
 
                     </div>
 
