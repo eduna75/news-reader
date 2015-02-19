@@ -11,7 +11,6 @@ def generator():
 
     for l in links:
         feeds = feedparser.parse(l[1])
-        db = sqlite3.connect('news-reader.db')
         for i in xrange(0, len(feeds['entries'])):
             try:
                 post = [(feeds['entries'][i].title), (feeds['entries'][i].summary), (feeds['entries'][i].link)]
@@ -19,11 +18,11 @@ def generator():
             except BaseException as e:
                 print 'could not extract everything', e
             try:
-                db.execute('INSERT INTO news(title, summary, link) VALUES (?,?,?);', post)
-                db.commit()
+                link.execute('INSERT INTO news(title, summary, link) VALUES (?,?,?);', post)
+                link.commit()
             except BaseException as e:
                 print 'Double entry, was not committed to the database', e
-        db.close()
+    link.close()
 
 
 if __name__ == "__main__":
