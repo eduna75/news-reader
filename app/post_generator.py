@@ -13,12 +13,12 @@ def generator():
         feeds = feedparser.parse(l[1])
         for i in xrange(0, len(feeds['entries'])):
             try:
-                post = [(feeds['entries'][i].title), (feeds['entries'][i].summary), (feeds['entries'][i].link)]
+                post = [(feeds['entries'][i].title), (feeds['entries'][i].summary), (feeds['entries'][i].link), (feeds['entries'][i].published)]
                 print post, '\n'
             except BaseException as e:
                 print 'could not extract everything', e
             try:
-                link.execute('INSERT INTO news(title, summary, link) VALUES (?,?,?);', post)
+                link.execute('INSERT INTO news(title, summary, link, date) VALUES (?,?,?,?);', post)
                 link.commit()
             except BaseException as e:
                 print 'Double entry, was not committed to the database', e
