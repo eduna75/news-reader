@@ -2,9 +2,11 @@ __author__ = 'justus'
 
 import feedparser
 import sqlite3
+import threading
 
 
 def generator():
+    threading.Timer(900, generator).start()
 
     link = sqlite3.connect('news-reader.db')
     links = link.execute('SELECT * FROM url')
@@ -14,7 +16,8 @@ def generator():
         feeds = feedparser.parse(l[1])
         for i in xrange(0, len(feeds['entries'])):
             try:
-                post = [(feeds['entries'][i].title), (feeds['entries'][i].summary), (feeds['entries'][i].link), (feeds['feed'].title), (feeds['entries'][i].published)]
+                post = [(feeds['entries'][i].title), (feeds['entries'][i].summary), (feeds['entries'][i].link),
+                        (feeds['feed'].title), (feeds['entries'][i].published)]
                 print post, '\n'
             except BaseException as e:
                 print 'could not extract everything', e

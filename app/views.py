@@ -10,13 +10,17 @@ def db_connect():
     return conn
 
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def index():
     db = db_connect()
     select = db.execute('SELECT * FROM news')
     post = [dict(id=row[0], title=row[1], summary=row[2], link=row[3], source=row[5], time=row[7]) for row in select.fetchall()]
     db.close()
-    return render_template('index.html', post=post, length=len(post))
+
+    url_db = db_connect()
+    select = url_db.execute('SELECT * FROM url')
+    urls = [dict(id=row[0], url=row[1], name=row[2]) for row in select.fetchall()]
+    return render_template('index.html', post=post, length=len(post), urls=urls)
 
 
 @app.route('/config', methods=['GET', 'POST'])

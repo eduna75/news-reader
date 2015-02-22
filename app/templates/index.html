@@ -6,47 +6,60 @@
             <p>Serving, {{ length }} stories</p>
         </div>
         <div class="row">
-            <div class="col-sm-3">
-
-                    <div class="list-group">
-                        {% for p in post[length:(length -20):-1] %}
-                        <a href="{{ p.link }}" class="list-group-item" target="_blank">
-                            <p>{{ p.title }}</p>
-                            <small>Date: {{ p.time }}</small><br>
-                            <small>Source: {{ p.source }}</small><br>
-                        </a>
+            <div class="col-sm-6">
+                <div class="list-group">
+                    <div class="accordion" id="accordion2">
+                        {% for p in post[(length -50):(length -100):-1] %}
+                            <div class="accordion-group">
+                                <div class="accordion-heading">
+                                    <a class="accordion-toggle list-group-item list-group-item-success"
+                                       data-toggle="collapse" data-parent="#accordion2"
+                                       href="#{{ p.id }}"><h4>{{ p.title }}</h4>
+                                        <small>source: {{ p.source }}</small>
+                                        <br>
+                                    </a>
+                                </div>
+                                <div id="{{ p.id }}" class="accordion-body collapse open">
+                                    <div class="accordion-inner">
+                                        <span class="list-group-item">
+                                            <small>{{ p.time }}</small><br>
+                                            {{ p.summary|safe }}<br>
+                                        <a href="{{ p.link }}" target="_blank">Read further:</a>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
                         {% endfor %}
                     </div>
-
+                </div>
             </div>
-            <div class="col-sm-3">
 
-                    <div class="list-group">
-                        {% for p in post[(length -20):(length -40):-1] %}
-                        <a href="{{ p.link }}" class="list-group-item" target="_blank">
-                            <p>{{ p.title }}</p>
-                            <small>{{ p.author }}</small>
-                            <small>Date: {{ p.time }}</small><br>
-                            <small>Source: {{ p.source }}</small><br>
-                        </a>
-                    {% endfor %}
-                    </div>
-
-            </div>
             <div class="col-sm-6">
-                {% for p in post[(length -40):(length -50):-1] %}
-                    <div class="list-group">
-                        <a href="{{ p.link }}" class="list-group-item list-group-item-success" target="_blank">
-                            <h4><p>{{ p.title }}</p></h4>
-                            <small>Date: {{ p.time }}</small>
-                        </a>
-
-                        <p class="list-group-item">{{ p.summary }}<br>
-                            <small>Source: {{ p.source }}</small><br>
-                        </p>
-                        <hr>
+                <div class="list-group">
+                    <div class="accordion" id="accordion2">
+                        {% for p in post[(length):(length -50):-1] %}
+                            <div class="accordion-group">
+                                <div class="accordion-heading">
+                                    <a class="accordion-toggle list-group-item list-group-item-success"
+                                       data-toggle="collapse" data-parent="#accordion2"
+                                       href="#{{ p.id }}"><h4>{{ p.title }}</h4>
+                                        <small>source: {{ p.source }}</small>
+                                        <br>
+                                    </a>
+                                </div>
+                                <div id="{{ p.id }}" class="accordion-body collapse open">
+                                    <div class="accordion-inner">
+                                        <span class="list-group-item">
+                                            <small>{{ p.time }}</small><br>
+                                            {{ p.summary|safe }}<br>
+                                        <a href="{{ p.link }}" target="_blank">Read further:</a>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
                     </div>
-                {% endfor %}
+                </div>
             </div>
         </div>
     </div>
