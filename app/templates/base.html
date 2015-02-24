@@ -16,6 +16,16 @@
                         The headlines of right now!
                     </small>
                 </h1>
+                <br><br>
+                <div class="menu">
+                    <small>theme selector</small>
+                    <select id="theme_list" name="name_theme_list">
+                        {% for theme in theme_list %}
+                            <option value="{{ theme }}">{{ theme }}</option>
+                        {% endfor %}
+                        {{ theme_list }}
+                    </select>
+                </div>
             </div>
 
             <div class="col-sm-6">
@@ -27,14 +37,6 @@
                             {% for y in urls %}
                                 <option value="{{ y.id }}">{{ y.name }}</option>
                             {% endfor %}
-                        </select>
-                    </div>
-                    <div class="menu">
-                        <select id="theme_list" name="name_theme_list">
-                            {% for theme in theme_list %}
-                                <option value="{{ theme }}">{{ theme }}</option>
-                            {% endfor %}
-                            {{ theme_list }}
                         </select>
                     </div>
                 </div>
@@ -50,10 +52,10 @@
 <script>
     var theme_dropdown_selected = $('#theme_list').val(); //no :selected here
     $("#theme_list").change(function () {
-        dirLocator = "/bootswatch/"
+        var dirLocator = "/bootswatch/"
         theme_dropdown_selected = $(this).val();
-        themeDropdownSelected = dirLocator.concat(theme_dropdown_selected, '/bootstrap.min.css')
-        $('#bootstrap').attr('href', themeDropdownSelected);
+        var themeDropDownSelected = dirLocator.concat(theme_dropdown_selected, '/bootstrap.min.css')
+        $('#bootstrap').attr('href', themeDropDownSelected);
     });
 </script>
 </body>
