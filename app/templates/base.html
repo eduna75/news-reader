@@ -3,6 +3,7 @@
 <head lang="en">
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/bootswatch/simplex/bootstrap.min.css"/>
     <title>{% block title %}{% endblock %}</title>
 </head>
 <body>
@@ -17,23 +18,52 @@
                 </h1>
             </div>
 
-        <div class="col-sm-6">
-            <p>something should go here!</p>
-            <div class="table-responsive">
-    <div class="table">
-            <select name="Item_1" multiple>
-                {% for y in urls %}
-                <option value="{{ y.id }}">{{ y.name }}</option>
-                {% endfor %}
-            </select>
-    </div>
-</div>
-        </div>
+            <div class="col-sm-6">
+                <p>something should go here!</p>
+
+                <div class="table-responsive">
+                    <div class="table">
+                        <select name="news_list" multiple>
+                            {% for y in urls %}
+                                <option value="{{ y.id }}">{{ y.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="menu">
+                        <select name="theme_list">
+                            {% for theme in theme_list %}
+                                <option value="{{ theme }}">{{ theme }}</option>
+                            {% endfor %}
+                            {{ theme_list }}
+                        </select>
+                    </div>
+                </div>
             </div>
+        </div>
     </div>
     {% block content %}{% endblock %}
 </div>
+
 <script src="/bower_components/jquery/dist/jquery.min.js"></script>
 <script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+    $("#ddselect").change(function(){
+        if($("#theme_list option:selected").attr("value") == {{ theme }}){
+            alert("Project manager 1 alert");
+        }
+        if($("#theme_list option:selected").attr("id") == "projectmanager2"){
+            alert("Project manager 2 alert");
+        }
+    });
+
+});
+    var theme = $('#theme_list :selected').text();
+    $('#theme_list').on('change', function () {
+        var val = $(this).val();
+        $('link[href="/bootswatch/simplex/bootstrap.min.css"]').attr('href', '/bootswatch/simplex/bootstrap.min.css');
+    });
+</script>
 </body>
 </html>

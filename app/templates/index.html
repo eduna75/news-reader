@@ -2,14 +2,14 @@
 {% block title %}News from Thailand, headlines from Thailand{% endblock %}
 {% block content %}
     <div class="well">
-        <div class="blockquote">
+        <blockquote>
             <p>Serving, {{ length }} stories</p>
-        </div>
+        </blockquote>
         <div class="row">
             <div class="col-sm-6">
                 <div class="list-group">
                     <div class="accordion" id="accordion2">
-                        {% for p in post[(length -50):(length -100):-1] %}
+                        {% for p in post[(length -2):(length -85):-2] %}
                             <div class="accordion-group">
                                 <div class="accordion-heading">
                                     <a class="accordion-toggle list-group-item list-group-item-success"
@@ -37,7 +37,7 @@
             <div class="col-sm-6">
                 <div class="list-group">
                     <div class="accordion" id="accordion2">
-                        {% for p in post[(length):(length -50):-1] %}
+                        {% for p in post[(length):(length -85):-2] %}
                             <div class="accordion-group">
                                 <div class="accordion-heading">
                                     <a class="accordion-toggle list-group-item list-group-item-success"
