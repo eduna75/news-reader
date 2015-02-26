@@ -1,6 +1,47 @@
 {% extends "base.html" %}
 {% block title %}News from Thailand, headlines from Thailand{% endblock %}
 {% block content %}
+    {% for message in get_flashed_messages() %}
+        <div class="alert alert-dismissable alert-warning">
+            {{ message }}
+        </div>
+    {% endfor %}
+    <div class="jumbotron">
+        <div class="row">
+            <div class="col-sm-6">
+                <h1>News Thailand
+                    <small><br>
+                        The headlines of right now!
+                    </small>
+                </h1>
+                <br><br>
+
+                <div class="menu">
+                    <small>theme selector</small>
+                    <select id="theme_list" name="name_theme_list">
+                        {% for theme in theme_list %}
+                            <option value="{{ theme }}">{{ theme }}</option>
+                        {% endfor %}
+                        {{ theme_list }}
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-sm-6">
+                <p>something should go here!</p>
+
+                <div class="table-responsive">
+                    <div class="table">
+                        <select name="news_list" multiple>
+                            {% for y in urls %}
+                                <option value="{{ y.id }}">{{ y.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="well">
         <blockquote>
             <p>Serving, {{ length }} stories</p>

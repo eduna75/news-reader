@@ -2,7 +2,14 @@
 {% block title %}Configuration platform{% endblock %}
 
 {% block content %}
+    {% for message in get_flashed_messages() %}
+        <div class="alert alert-dismissable alert-warning">
+            {{ message }}
+        </div>
+    {% endfor %}
+
     <div class="well">
+    <a href="logout">Logout</a>
         <div class="row">
             <div class="col-lg-4">
                 <form method="post" action="">
@@ -26,9 +33,9 @@
                         <div class="panel-body">
                             <a href="{{ url.url }}" target="_blank">{{ url.url }}</a>
                         </div>
-                    <form method="post" action="">
-                    <input type="button" class="btn-default" name="delete" value="delete">
-                    </form>
+                        <form method="post" action="">
+                            <input type="button" class="btn-default" name="delete" value="delete">
+                        </form>
 
                     </div>
 

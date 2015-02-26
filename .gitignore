@@ -2,3 +2,4 @@
 venv
 .gitignore
 app/news-reader.db-journal
+app/news-reader.db
