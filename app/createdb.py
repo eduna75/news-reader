@@ -8,7 +8,8 @@ def create_db(database):
     cur = db.cursor()
     cur.execute(
         "CREATE TABLE news(id INTEGER PRIMARY KEY, title VARCHAR UNIQUE, summary VARCHAR UNIQUE, "
-        "link VARCHAR UNIQUE, timestamp DATETIME DEFAULT current_timestamp, publisher VARCHAR, source VARCHAR)")
+        "link VARCHAR UNIQUE, timestamp DATETIME DEFAULT current_timestamp, publisher VARCHAR, source VARCHAR,"
+        " date VARCHAR)")
     cur.execute("CREATE TABLE url(url_id INTEGER PRIMARY KEY, url VARCHAR UNIQUE, name VARCHAR NOT NULL, "
                 "active INTEGER NOT NULL )")
     db.commit()
@@ -17,11 +18,11 @@ def create_db(database):
 
 def fill_url(database):
     db = sqlite3.connect(database)
-    db.execute('INSERT INTO url(url, name) VALUES ("http://englishnews.thaipbs.or.th/feed", "Thai PBS")')
+    db.execute('INSERT INTO url(url, name, active) VALUES ("http://englishnews.thaipbs.or.th/feed", "Thai PBS", 1)')
     db.commit()
     db.close()
 
 
 if __name__ == "__main__":
+    create_db('news-reader.db')
     fill_url('news-reader.db')
-    # create_db('news-reader.db')

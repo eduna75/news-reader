@@ -5,6 +5,7 @@ from flask.ext.login import LoginManager
 from app.db_connect import DBConnect as DBc
 from app import app
 from functools import wraps
+import os
 
 
 login_manager = LoginManager()
@@ -46,7 +47,6 @@ def logout():
     return redirect(url_for('index'))
 
 
-
 @app.route('/config', methods=['GET', 'POST'])
 @login_required
 def config():
@@ -61,13 +61,26 @@ def config():
             error = "you didn't fill in all the fields: "
         else:
             try:
-                form_input = [(request.form['rssurl']), (request.form['name'])]
+                if 1 in request.form.values():
+                    active = 1
+                else:
+                    active = 0
+                form_input = [(request.form['rssurl']), (request.form['name']), active]
                 db_input = DBc.db_connect()
-                db_input.execute('INSERT INTO url(url, name) VALUES (?,?);', form_input)
+                db_input.execute('INSERT INTO url(url, name, active) VALUES (?,?,?);', form_input)
                 db_input.commit()
                 db_input.close()
-                print request.form['rssurl'], request.form['name']
+                return redirect(url_for('run_post'))
             except BaseException as e:
                 print "That didn't go as planned! ", e
                 error = "You didn't fill in all the fields or maybe a double entry:"
+
     return render_template('config.html', urls=urls, error=error)
+
+
+@app.route('/run_post')
+@login_required
+def run_post():
+    os.system('app/post_generator.py')
+    print 'finished'
+    return redirect(url_for('config'))

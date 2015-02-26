@@ -16,11 +16,17 @@
                     <p>insert a new rss feed URL:</p>
                     <small>eg. http://url.torss.feed/rss</small>
                     <br>
-                    <input type="text" name="rssurl" placeholder="http://url.to.rss" value="{{ request.form.rssurl }}">
+                    <input type="text" name="rssurl" placeholder="http://url.to.rss" value="{{ request.form.rssurl }}">*
+                    <br>
+                    <input type="text" name="name" placeholder="Name" value="{{ request.form.name }}">*
+                    <br>
+                    <input type="text" name="edition" placeholder="Edition" value="{{ request.form.edition }}">
+                    <br>
+                    <input type="radio" id="active" checked value="1">Activate&nbsp;
+                    <input type="radio" id="active" value="0">Deactivate
+                    <br>
+                    <button class="btn-default" name="button">Enter</button>
 
-                    <p>Name for rss feed:</p>
-                    <input type="text" name="name" placeholder="Name" value="{{ request.form.name }}">
-                    <button class="btn-default" name="button">push me</button>
                 </form>
                 {% if error %}
                     <div class="alert alert-danger" role="alert">{{ error }}</div>
