@@ -28,15 +28,13 @@
             </div>
 
             <div class="col-sm-6">
-                <p>something should go here!</p>
+                <p>Serving stories {{ length }} from:</p>
 
                 <div class="table-responsive">
                     <div class="table">
-                        <select name="news_list" multiple>
-                            {% for y in urls %}
-                                <option value="{{ y.id }}">{{ y.name }}</option>
+                        {% for y in urls %}
+                               <small>{{ y.name }}</small><br>
                             {% endfor %}
-                        </select>
                     </div>
                 </div>
             </div>
