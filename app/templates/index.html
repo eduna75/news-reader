@@ -9,11 +9,13 @@
     <div class="jumbotron">
         <div class="row">
             <div class="col-sm-6">
-                <h1>News Thailand
-                    <small><br>
-                        The headlines of right now!
-                    </small>
-                </h1>
+                {% for config in site_config %}
+                    <h1>{{ config.title }}
+                        <small><br>
+                            {{ config.slogan }}
+                        </small>
+                    </h1>
+                {% endfor %}
                 <br><br>
 
                 <div class="menu">
@@ -28,13 +30,13 @@
             </div>
 
             <div class="col-sm-6">
-                <p>Serving stories {{ length }} from:</p>
+                <p>Serving {{ length }} stories from:</p>
 
                 <div class="table-responsive">
                     <div class="table">
                         {% for y in urls %}
-                               <small>{{ y.name }}</small><br>
-                            {% endfor %}
+                            <small>{{ y.name }}</small><br>
+                        {% endfor %}
                     </div>
                 </div>
             </div>
@@ -48,7 +50,7 @@
             <div class="col-sm-6">
                 <div class="list-group">
                     <div class="accordion" id="accordion2">
-                        {% for p in post[(length -2):(length -50):-2] %}
+                        {% for p in post[(length -2):(length -51):-2] %}
                             <div class="accordion-group">
                                 <div class="accordion-heading">
                                     <a class="accordion-toggle list-group-item list-group-item-warning"

@@ -31,7 +31,7 @@ def config_login():
     error = None
     if request.method == 'POST':
         if request.form['username'] != 'admin' or request.form['password'] != 'admin':
-            error = "You don't have the right to enter!"
+            error = "You shall not pass!"
         else:
             session['logged_in'] = True
             flash('You are now logged in!')
@@ -57,7 +57,13 @@ def config():
 
     error = None
     if request.method == 'POST':
-        if request.form['rssurl'] is None or request.form['name'] is None:
+        if 'delete' in request.values:
+            db_delete = DBc.db_connect()
+            db_delete.execute('DELETE FROM url WHERE url_id=?', request.form.values())
+            db_delete.commit()
+            db_delete.close()
+            return redirect(url_for('config'))
+        elif request.form['rssurl'] is None or '' and request.form['name'] is None or '':
             error = "you didn't fill in all the fields: "
         else:
             try:
