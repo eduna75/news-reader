@@ -1,104 +1,97 @@
 {% extends "base.html" %}
+
 {% block title %}News from Thailand, headlines from Thailand{% endblock %}
+
 {% block content %}
-    {% for message in get_flashed_messages() %}
-        <div class="alert alert-dismissable alert-warning">
-            {{ message }}
-        </div>
-    {% endfor %}
-    <div class="jumbotron">
-        <div class="row">
-            <div class="col-sm-6">
-                {% for config in site_config %}
-                    <h1>{{ config.title }}
-                        <small><br>
-                            {{ config.slogan }}
-                        </small>
-                    </h1>
-                {% endfor %}
-                <br><br>
-
-                <div class="menu">
-                    <small>theme selector</small>
-                    <select id="theme_list" name="name_theme_list">
-                        {% for theme in theme_list %}
-                            <option value="{{ theme }}">{{ theme }}</option>
-                        {% endfor %}
-                        {{ theme_list }}
-                    </select>
-                </div>
+    <div class="container">
+        {% for message in get_flashed_messages() %}
+            <div class="alert alert-dismissable alert-warning">
+                {{ message }}
             </div>
+        {% endfor %}
+        <div class="jumbotron">
+            <div class="row">
+                <div class="col-sm-6">
+                    {% for config in site_config %}
+                        <h1>{{ config.title }}
+                            <small><br>
+                                {{ config.slogan }}
+                            </small>
+                        </h1>
+                    {% endfor %}
+                </div>
 
-            <div class="col-sm-6">
-                <p>Serving {{ length }} stories from:</p>
+                <div class="col-sm-6">
+                    <p>Serving {{ length }} stories from:</p>
 
-                <div class="table-responsive">
-                    <div class="table">
-                        {% for y in urls %}
-                            <small>{{ y.name }}</small><br>
-                        {% endfor %}
+                    <div class="table-responsive">
+                        <div class="table">
+                            {% for y in urls %}
+                                <small>{{ y.name }}</small><br>
+                            {% endfor %}
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="well">
-        <blockquote>
-            <p>Serving, {{ length }} stories</p>
-        </blockquote>
-        <div class="row">
-            <div class="col-sm-6">
-                <div class="list-group">
-                    <div class="accordion" id="accordion2">
-                        {% for p in post[(length -2):(length -51):-2] %}
-                            <div class="accordion-group">
-                                <div class="accordion-heading">
-                                    <a class="accordion-toggle list-group-item list-group-item-warning"
-                                       data-toggle="collapse" data-parent="#accordion2"
-                                       href="#{{ p.id }}"><h4>{{ p.title }}</h4>
-                                        <small>source: {{ p.source }}</small>
-                                        <br>
-                                    </a>
-                                </div>
-                                <div id="{{ p.id }}" class="accordion-body collapse open">
-                                    <div class="accordion-inner">
+        <div class="well">
+            <blockquote>
+                <p>Serving, {{ length }} stories</p>
+            </blockquote>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="list-group">
+                        <div class="accordion" id="accordion2">
+                            {% for p in post[(length -2):(length -51):-2] %}
+                                <div class="accordion-group">
+                                    <div class="accordion-heading">
+                                        <a class="accordion-toggle list-group-item list-group-item-warning"
+                                           data-toggle="collapse" data-parent="#accordion2"
+                                           href="#{{ p.id }}"><h4>{{ p.title }}</h4>
+                                            <small>source: {{ p.source }}</small>
+                                            <br>
+                                        </a>
+                                    </div>
+                                    <div id="{{ p.id }}" class="accordion-body collapse open">
+                                        <div class="accordion-inner">
                                         <span class="list-group-item">
                                             <small>{{ p.time }}</small><br>
                                             {{ p.summary|safe }}<br>
                                         <a href="{{ p.link }}" target="_blank">Read further:</a>
                                         </span>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        {% endfor %}
+                            {% endfor %}
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="col-sm-6">
-                <div class="list-group">
-                    <div class="accordion" id="accordion2">
-                        {% for p in post[(length):(length -50):-2] %}
-                            <div class="accordion-group">
-                                <div class="accordion-heading">
-                                    <a class="accordion-toggle list-group-item list-group-item-warning"
-                                       data-toggle="collapse" data-parent="#accordion2"
-                                       href="#{{ p.id }}"><h4>{{ p.title }}</h4>
-                                        <small>source: {{ p.source }}</small>
-                                        <br>
-                                    </a>
-                                </div>
-                                <div id="{{ p.id }}" class="accordion-body collapse open">
-                                    <div class="accordion-inner">
+                <div class="col-sm-6">
+                    <div class="list-group">
+                        <div class="accordion" id="accordion2">
+                            {% for p in post[(length):(length -50):-2] %}
+                                <div class="accordion-group">
+                                    <div class="accordion-heading">
+                                        <a class="accordion-toggle list-group-item list-group-item-warning"
+                                           data-toggle="collapse" data-parent="#accordion2"
+                                           href="#{{ p.id }}"><h4>{{ p.title }}</h4>
+                                            <small>source: {{ p.source }}</small>
+                                            <br>
+                                        </a>
+                                    </div>
+                                    <div id="{{ p.id }}" class="accordion-body collapse open">
+                                        <div class="accordion-inner">
                                         <span class="list-group-item">
                                             <small>{{ p.time }}</small><br>
                                             {{ p.summary|safe }}<br>
                                         <a href="{{ p.link }}" target="_blank">Read further:</a>
                                         </span>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        {% endfor %}
+                            {% endfor %}
+                        </div>
                     </div>
                 </div>
             </div>

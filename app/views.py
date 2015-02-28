@@ -18,11 +18,8 @@ def index():
             select.fetchall()]
     db.close()
 
-    conf_db = DBc.db_connect()
-    config = conf_db.execute('SELECT * FROM config')
-    site_config = [dict(title=row[0], slogan=row[1], theme=row[3]) for row in config.fetchall()]
-    print site_config
-    conf_db.close()
+    site = DBc()
+    site_config = site.con_config()
 
     url_db = DBc.db_connect()
     select = url_db.execute('SELECT * FROM url')
@@ -31,3 +28,9 @@ def index():
     return render_template('index.html', post=post, length=len(post), urls=urls, theme_list=theme_list[0],
                            site_config=site_config)
 
+
+@app.route('/help')
+def help_page():
+    site = DBc()
+    site_config = site.con_config()
+    return render_template('help.html', site_config=site_config)

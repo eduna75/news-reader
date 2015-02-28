@@ -36,7 +36,9 @@ def config_login():
             session['logged_in'] = True
             flash('You are now logged in!')
             return redirect(url_for('config'))
-    return render_template('config_login.html', title='the login shit here!', error=error)
+    site = DBc()
+    site_config = site.con_config()
+    return render_template('config_login.html', title='the login shit here!', error=error, site_config=site_config)
 
 
 @app.route('/logout')
@@ -54,6 +56,9 @@ def config():
     select = db.execute('SELECT * FROM url')
     urls = [dict(id=row[0], url=row[1], name=row[2])for row in select.fetchall()]
     db.close()
+
+    site = DBc()
+    site_config = site.con_config()
 
     error = None
     if request.method == 'POST':
@@ -81,7 +86,7 @@ def config():
                 print "That didn't go as planned! ", e
                 error = "You didn't fill in all the fields or maybe a double entry:"
 
-    return render_template('config.html', urls=urls, error=error)
+    return render_template('config.html', urls=urls, error=error, site_config=site_config)
 
 
 @app.route('/run_post')
