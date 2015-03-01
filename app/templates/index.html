@@ -25,7 +25,7 @@
                     <p>Serving {{ length }} stories from:</p>
 
                     <div class="table-responsive">
-                        <div class="table">
+                        <div class="table" id="rss-feed">
                             {% for y in urls %}
                                 <small>{{ y.name }}</small><br>
                             {% endfor %}
@@ -47,8 +47,8 @@
                                     <div class="accordion-heading">
                                         <a class="accordion-toggle list-group-item list-group-item-warning"
                                            data-toggle="collapse" data-parent="#accordion2"
-                                           href="#{{ p.id }}"><h4>{{ p.title }}</h4>
-                                            <small>source: {{ p.source }}</small>
+                                           href="#{{ p.id }}"><h4>{{ p.title|safe }}</h4>
+                                            <small>source: {{ p.source|safe }}</small>
                                             <br>
                                         </a>
                                     </div>

@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block title %}This is a 404 error{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h4>code: 404
+            <small>You reached the end of the internet please go back!</small>
+        </h4>
+    <p><a href="{{ url_for('index') }}">go somewhere nice</a>
+    </div>
+{% endblock %}
