@@ -4,6 +4,10 @@ from app import app
 from flask import render_template, request, url_for, redirect, session, flash
 from app.db_connect import DBConnect as DBc
 from os import walk
+import os
+
+
+app.config.from_object(os.environ['APP_SETTINGS'])
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -17,9 +21,6 @@ def index():
     post = [dict(id=row[0], title=row[1], summary=row[2], link=row[3], source=row[10], time=row[4]) for row in
             select.fetchall()]
     db.close()
-
-    site = DBc()
-    site_config = site.con_config()
 
     url_db = DBc.db_connect()
     select = url_db.execute('SELECT * FROM url')
@@ -37,7 +38,7 @@ def index():
     site = DBc()
     site_config = site.con_config()
     return render_template('index.html', post=post, length=len(post), urls=urls, theme_list=theme_list[0],
-                           site_config=site_config)
+                           site_config=site_config, error=error)
 
 
 @app.route('/help')

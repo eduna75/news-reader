@@ -9,6 +9,11 @@
                 {{ message }}
             </div>
         {% endfor %}
+    {% if error %}
+        <div class="alert alert-danger">
+        {{ error }}
+        </div>
+    {% endif %}
         <div class="jumbotron">
             <div class="row">
                 <div class="col-sm-6">
