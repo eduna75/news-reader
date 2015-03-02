@@ -32,7 +32,7 @@
                     <div class="table-responsive">
                         <div class="table" id="rss-feed">
                             {% for y in urls %}
-                                <small>{{ y.name }}</small><br>
+                                <small><a href="{{ y.url }}" target="_self">{{ y.name }}</a></small><br>
                             {% endfor %}
                         </div>
                     </div>

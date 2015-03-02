@@ -3,11 +3,8 @@ __author__ = 'justus'
 from app import app
 from flask import render_template, request, url_for, redirect, session, flash
 from app.db_connect import DBConnect as DBc
+from app.authenticate import login_required
 from os import walk
-import os
-
-
-app.config.from_object(os.environ['APP_SETTINGS'])
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -27,6 +24,7 @@ def index():
     urls = [dict(id=row[0], url=row[1], name=row[2]) for row in select.fetchall()]
     url_db.close()
 
+    # login part
     error = None
     if request.method == 'POST':
         if request.form['username'] != 'admin' or request.form['password'] != 'admin':
@@ -42,6 +40,7 @@ def index():
 
 
 @app.route('/help')
+@login_required
 def help_page():
     site = DBc()
     site_config = site.con_config()
@@ -52,4 +51,18 @@ def help_page():
 def page_not_found(e):
     site = DBc()
     site_config = site.con_config()
-    return render_template('404.html', site_config=site_config), 404
+    return render_template('404.html', site_config=site_config, e=e), 404
+
+
+@app.errorhandler(401)
+def page_not_found(e):
+    site = DBc()
+    site_config = site.con_config()
+    return render_template('404.html', site_config=site_config, e=e), 401
+
+
+@app.errorhandler(405)
+def page_not_found(e):
+    site = DBc()
+    site_config = site.con_config()
+    return render_template('404.html', site_config=site_config, e=e), 405
