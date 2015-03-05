@@ -78,6 +78,5 @@ def config():
 @login_required
 def run_post():
     post_generator.generator()
-    print 'finished'
     flash('post_generating finished')
     return redirect(url_for('config'))
