@@ -4,7 +4,11 @@
             {% for config in site_config %}
                 <a href="/" class="navbar-brand">{{ config.title }}</a>
             {% endfor %}
-
+            <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
         </div>
         <div class="navbar-collapse collapse" id="navbar-main">
             <ul class="nav navbar-nav">
@@ -23,12 +27,12 @@
                 <li>
                     <a href="config">Config</a>
                 </li>
-            <li>
+                <li>
                     <a href="#" data-toggle="modal" data-target="#myModal">Login</a>
                 </li>
             </ul>
-        {% include "login.html" ignore missing %}
-            {% include "login.html" ignore missing%}
+            {% include "login.html" ignore missing %}
+            {% include "login.html" ignore missing %}
         </div>
     </div>
 </div>
