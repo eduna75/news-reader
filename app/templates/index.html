@@ -6,18 +6,18 @@
     <div class="container">
         {% for message in get_flashed_messages() %}
             <div class="bs-component">
-            <div class="alert alert-dismissable alert-warning">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-                <p>{{ message }}</p>
-            </div>
+                <div class="alert alert-dismissable alert-warning">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <p>{{ message }}</p>
+                </div>
             </div>
         {% endfor %}
         {% if error %}
             <div class="bs-component">
-            <div class="alert alert-dismissable alert-danger">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-                <p>{{ error }}</p>
-            </div>
+                <div class="alert alert-dismissable alert-danger">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <p>{{ error }}</p>
+                </div>
             </div>
         {% endif %}
         <div class="">
@@ -50,61 +50,39 @@
                 <p>Serving, {{ length }} stories</p>
             </blockquote>
             <div class="row">
-                <div class="col-sm-6">
-                    <div class="list-group">
-                        <div class="panel-group" id="accordion">
-                            {% for p in post[(length -2):(length -51):-2] %}
-                                <div class="panel panel-default">
-                                    <div class="accordion-heading">
-                                        <a class="accordion-toggle list-group-item list-group-item-warning"
-                                           data-toggle="collapse" data-parent="#accordion"
-                                           href="#{{ p.id }}"><h4>{{ p.title|safe }}</h4>
-                                            <small>source: {{ p.source|safe }}</small>
-                                            <br>
-                                        </a>
-                                    </div>
-                                    <div id="{{ p.id }}" class="accordion-body collapse open">
-                                        <div class="accordion-inner">
+            {% set num = 1 %}
+                {% for article_row in post[length:length -100:-1] | batch(50) %}
+                    <div class="col-sm-6">
+                    {% set num = num +1 %}
+                        <div class="list-group">
+                            <div class="panel-group" id="accordion{{ num }}">
+                                {% for p in article_row %}
+                                    <div class="panel panel-default">
+                                        <div class="accordion-heading">
+                                            <a class="accordion-toggle list-group-item list-group-item-warning"
+                                               data-toggle="collapse" data-parent="#accordion{{ num }}"
+                                               href="#{{ p.id }}"><h4>{{ p.title|safe }}</h4>
+                                                <div class="row">
+                                                    <div class="col-sm-6"><small>source: {{ p.source|safe }}</small></div>
+                                                    <div class="col-sm-6"><p class="text-right"><small>date: {{ p.time }}</small></p></div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <div id="{{ p.id }}" class="accordion-body collapse open">
+                                            <div class="accordion-inner">
                                         <span class="list-group-item">
                                             <small>{{ p.time }}</small><br>
                                             {{ p.summary|safe }}<br>
                                         <a href="{{ p.link }}" target="_blank">Read further:</a>
                                         </span>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            {% endfor %}
+                                {% endfor %}
+                            </div>
                         </div>
                     </div>
-                </div>
-
-                <div class="col-sm-6">
-                    <div class="list-group">
-                        <div class="panel-group" id="accordion1">
-                            {% for p in post[(length):(length -50):-2] %}
-                                <div class="panel panel-default">
-                                    <div class="accordion-heading">
-                                        <a class="accordion-toggle list-group-item list-group-item-warning"
-                                           data-toggle="collapse" data-parent="#accordion1"
-                                           href="#{{ p.id }}"><h4>{{ p.title|safe }}</h4>
-                                            <small>source: {{ p.source|safe }}</small>
-                                            <br>
-                                        </a>
-                                    </div>
-                                    <div id="{{ p.id }}" class="accordion-body collapse open">
-                                        <div class="accordion-inner">
-                                        <span class="list-group-item">
-                                            <small>{{ p.time }}</small><br>
-                                            {{ p.summary|safe }}<br>
-                                        <a href="{{ p.link }}" target="_blank">Read further:</a>
-                                        </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            {% endfor %}
-                        </div>
-                    </div>
-                </div>
+                {% endfor %}
             </div>
         </div>
     </div>
