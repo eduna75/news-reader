@@ -12,9 +12,6 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 
 
-app.secret_key = 'N\xb3\x95\xcf\xc3\xd0\x8c2\x8a\xa73\xbc\x1c\xc8\xcd3&\xb6\xdf\xfa\xd1\xd0\x1d\xcc'
-
-
 @app.route('/config_login', methods=['GET', 'POST'])
 def config_login():
     error = None

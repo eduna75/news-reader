@@ -6,7 +6,7 @@
     <div class="container">
         {% for message in get_flashed_messages() %}
             <div class="bs-component">
-                <div class="alert alert-dismissable alert-warning">
+                <div class="alert alert-dismissable alert-success">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                     <p>{{ message }}</p>
                 </div>
@@ -34,13 +34,10 @@
 
                 <div class="col-sm-6">
                     <p>Serving {{ length }} stories from:</p>
-
-                    <div class="table-responsive">
-                        <div class="table" id="rss-feed">
-                            {% for y in urls %}
-                                <small><a href="{{ y.url }}" target="_self">{{ y.name }}</a></small><br>
-                            {% endfor %}
-                        </div>
+                    <div class="list-group">
+                        {% for y in urls %}
+                                <small><a class="list-group-item" href="{{ y.url }}" target="_self">{{ y.name }}</a></small>
+                        {% endfor %}
                     </div>
                 </div>
             </div>
@@ -51,7 +48,7 @@
             </blockquote>
             <div class="row">
             {% set num = 1 %}
-                {% for article_row in post[length:length -100:-1] | batch(50) %}
+                {% for article_row in post[length:length -101:-1] | batch(50) %}
                     <div class="col-sm-6">
                     {% set num = num +1 %}
                         <div class="list-group">
