@@ -3,9 +3,8 @@ __author__ = 'justus'
 from flask import request, render_template, session, flash, redirect, url_for
 from flask.ext.login import LoginManager
 from app.db_connect import DBConnect as DBc
-from app import app
+from app import app, post_generator
 from app.authenticate import login_required
-import os
 
 
 login_manager = LoginManager()
@@ -78,6 +77,7 @@ def config():
 @app.route('/run_post')
 @login_required
 def run_post():
-    os.system('app/post_generator.py')
+    post_generator.generator()
     print 'finished'
+    flash('post_generating finished')
     return redirect(url_for('config'))

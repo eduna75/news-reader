@@ -8,7 +8,7 @@ import threading
 def generator():
     threading.Timer(900, generator).start()
 
-    link = sqlite3.connect('news-reader.db')
+    link = sqlite3.connect('app/news-reader.db')
     links = link.execute('SELECT * FROM url')
     total_committed = 0
     total_double = 0
