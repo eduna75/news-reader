@@ -5,15 +5,21 @@
 {% block content %}
     <div class="container">
         {% for message in get_flashed_messages() %}
+            <div class="bs-component">
             <div class="alert alert-dismissable alert-warning">
-                {{ message }}
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <p>{{ message }}</p>
+            </div>
             </div>
         {% endfor %}
-    {% if error %}
-        <div class="alert alert-danger">
-        {{ error }}
-        </div>
-    {% endif %}
+        {% if error %}
+            <div class="bs-component">
+            <div class="alert alert-dismissable alert-danger">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <p>{{ error }}</p>
+            </div>
+            </div>
+        {% endif %}
         <div class="">
             <div class="row">
                 <div class="col-sm-6">
@@ -46,12 +52,12 @@
             <div class="row">
                 <div class="col-sm-6">
                     <div class="list-group">
-                        <div class="accordion" id="accordion2">
+                        <div class="panel-group" id="accordion">
                             {% for p in post[(length -2):(length -51):-2] %}
-                                <div class="accordion-group">
+                                <div class="panel panel-default">
                                     <div class="accordion-heading">
                                         <a class="accordion-toggle list-group-item list-group-item-warning"
-                                           data-toggle="collapse" data-parent="#accordion2"
+                                           data-toggle="collapse" data-parent="#accordion"
                                            href="#{{ p.id }}"><h4>{{ p.title|safe }}</h4>
                                             <small>source: {{ p.source|safe }}</small>
                                             <br>
@@ -74,14 +80,14 @@
 
                 <div class="col-sm-6">
                     <div class="list-group">
-                        <div class="accordion" id="accordion2">
+                        <div class="panel-group" id="accordion1">
                             {% for p in post[(length):(length -50):-2] %}
-                                <div class="accordion-group">
+                                <div class="panel panel-default">
                                     <div class="accordion-heading">
                                         <a class="accordion-toggle list-group-item list-group-item-warning"
-                                           data-toggle="collapse" data-parent="#accordion2"
-                                           href="#{{ p.id }}"><h4>{{ p.title }}</h4>
-                                            <small>source: {{ p.source }}</small>
+                                           data-toggle="collapse" data-parent="#accordion1"
+                                           href="#{{ p.id }}"><h4>{{ p.title|safe }}</h4>
+                                            <small>source: {{ p.source|safe }}</small>
                                             <br>
                                         </a>
                                     </div>
