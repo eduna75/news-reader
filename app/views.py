@@ -1,28 +1,36 @@
 __author__ = 'justus'
 
 from app import app
-from flask import render_template, request, url_for, redirect, session, flash
+from flask import render_template, request, url_for, redirect, session, flash, g
 from app.db_connect import DBConnect as DBc
 from app.authenticate import login_required
 from os import walk
 
 
+@app.before_request
+def before_request():
+    g.db = DBc.db_connect()
+    g.config = DBc().con_config()
+
+    g.theme_list = []
+    for root, dir_name, file_name in walk('./app/static/bootswatch'):
+        g.theme_list.append(dir_name)
+
+
+@app.teardown_request
+def teardown_request(exception):
+    db = getattr(g, 'db', None)
+    if db is not None:
+        db.close()
+
+
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    theme_list = []
-    for root, dir_name, file_name in walk('./app/static/bootswatch'):
-        theme_list.append(dir_name)
 
-    db = DBc.db_connect()
-    select = db.execute('SELECT * FROM news INNER JOIN url ON source=url_id')
     post = [dict(id=row[0], title=row[1], summary=row[2], link=row[3], source=row[10], time=row[4]) for row in
-            select.fetchall()]
-    db.close()
+            g.db.execute('SELECT * FROM news INNER JOIN url ON source=url_id').fetchall()]
 
-    url_db = DBc.db_connect()
-    select = url_db.execute('SELECT * FROM url')
-    urls = [dict(id=row[0], url=row[1], name=row[2]) for row in select.fetchall()]
-    url_db.close()
+    urls = [dict(id=row[0], url=row[1], name=row[2]) for row in g.db.execute('SELECT * FROM url').fetchall()]
 
     # login part
     error = None
@@ -32,37 +40,27 @@ def index():
         else:
             session['logged_in'] = True
             flash('You are now logged in!')
-            return redirect(url_for('index'))
-    site = DBc()
-    site_config = site.con_config()
-    return render_template('index.html', post=post, length=len(post), urls=urls, theme_list=theme_list[0],
-                           site_config=site_config, error=error)
+            return redirect(url_for('config'))
+
+    return render_template('index.html', post=post, length=len(post), urls=urls, theme_list=g.theme_list[0],
+                           site_config=g.config, error=error, session=session)
 
 
 @app.route('/help')
-@login_required
 def help_page():
-    site = DBc()
-    site_config = site.con_config()
-    return render_template('help.html', site_config=site_config)
+    return render_template('help.html', site_config=g.config, theme_list=g.theme_list[0])
 
 
 @app.errorhandler(404)
 def page_not_found(e):
-    site = DBc()
-    site_config = site.con_config()
-    return render_template('404.html', site_config=site_config, e=e), 404
+    return render_template('404.html', theme_list=g.theme_list[0], site_config=g.config, e=e), 404
 
 
 @app.errorhandler(401)
 def page_not_found(e):
-    site = DBc()
-    site_config = site.con_config()
-    return render_template('404.html', site_config=site_config, e=e), 401
+    return render_template('404.html', theme_list=g.theme_list[0], site_config=g.config, e=e), 401
 
 
 @app.errorhandler(405)
 def page_not_found(e):
-    site = DBc()
-    site_config = site.con_config()
-    return render_template('404.html', site_config=site_config, e=e), 405
+    return render_template('404.html', theme_list=g.theme_list[0], site_config=g.config, e=e), 405

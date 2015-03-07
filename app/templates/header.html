@@ -24,14 +24,28 @@
                 <li>
                     <a href="help">Help</a>
                 </li>
-                <li>
-                    <a href="config">Config</a>
-                </li>
-                <li>
-                    <a href="#" data-toggle="modal" data-target="#myModal">Login</a>
-                </li>
+
+                {% if "logged_in" in session %}
+                    <li>
+                        <a href="config">Config</a>
+                    </li>
+                    <li>
+                        <a href="logout">Logout</a>
+                    </li>
+                    <li>
+                        <a class="pull-right" href="run_post">run post generator</a>
+                    </li>
+                {% else %}
+                    <li>
+                        <a href="#" data-toggle="modal" data-target="#myModal">Config</a>
+                    </li>
+                    <li>
+                        <a href="#" data-toggle="modal" data-target="#myModal">Login</a>
+                    </li>
+                {% endif %}
+
+
             </ul>
-            {% include "login.html" ignore missing %}
             {% include "login.html" ignore missing %}
         </div>
     </div>

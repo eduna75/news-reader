@@ -29,8 +29,7 @@ def generator():
             except BaseException as e:
                 print 'Double entry, was not committed to the database', e
                 total_double += 1
-    print total_double
-    print total_committed
+    return total_committed
     link.close()
 
 
