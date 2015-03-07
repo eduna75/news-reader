@@ -1,5 +1,8 @@
 {% extends "base.html" %}
 
+{% import "bootstrap/google.html" as google %}
+
+
 {% block title %}News from Thailand, headlines from Thailand{% endblock %}
 
 {% block content %}
@@ -83,4 +86,9 @@
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+    {{ google.analytics(account="UA-39697368-1") }}
 {% endblock %}
