@@ -2,78 +2,22 @@
 {% block title %}Configuration platform{% endblock %}
 
 {% block content %}
+
+
     <div class="container">
-        {% for message in get_flashed_messages() %}
-            <div class="bs-component">
-                <div class="alert alert-dismissable alert-success">
-                    <button type="button" class="close" data-dismiss="alert">&times;</button>
-                    <p>{{ message }}</p>
-                </div>
+        <ul class="nav nav-tabs">
+            <li class="active"><a aria-expanded="true" href="#News" data-toggle="tab">News</a></li>
+            <li class=""><a aria-expanded="false" href="#site_config" data-toggle="tab">Site Config</a></li>
+        </ul>
+        <div id="myTabContent" class="tab-content">
+            <div class="tab-pane fade active in" id="News">
+
+                {% include "news_config.html" ignore missing %}
             </div>
-        {% endfor %}
+            <div class="tab-pane fade" id="site_config">
 
-        <div class="row">
-            <div class="col-lg-5">
-                <form method="post" action="">
-                    <div class="form-group">
-                        <span class="glyphicon glyphicon-asterisk" style="color:red"></span>
-                        <label for="rssurl">insert a new rss feed</label>
-                        <input type="url" required="required" class="form-control" name="rssurl" placeholder="rss feed"
-                               value="{{ request.form.rssurl }}">
-                    </div>
-                    <div class="form-group">
-                        <span class="glyphicon glyphicon-asterisk" style="color:red"></span>
-                        <label for="name">Name of rss feed</label>
-                        <input type="text" required="required" class="form-control" name="name" placeholder="Name"
-                               value="{{ request.form.name }}">
-                    </div>
-                    <div class="form-group">
-                        <label for="edition">additional feed edition / category</label>
-                        <input type="text" class="form-control" name="edition" placeholder="Edition"
-                               value="{{ request.form.edition }}">
-                    </div>
-                    <input type="radio" id="active" checked value="1">Activate&nbsp;
-                    <input type="radio" id="active" value="0">Deactivate
-                    <br>
-                    <button type="submit" class="btn btn-default">Submit</button>
-
-
-                </form>
-                        <ul class="nav navbar-nav">
-                            <li>
-                                <a href="run_post">run post generator</a>
-                            </li>
-                        </ul>
-                {% for message in get_flashed_messages() %}
-                    <div class="bs-component">
-                        <div class="alert alert-dismissable alert-success">
-                            <button type="button" class="close" data-dismiss="alert">&times;</button>
-                            <p>{{ message }}</p>
-                        </div>
-                    </div>
-                {% endfor %}
-
-                {% if error %}
-                    <div class="alert alert-danger" role="alert">{{ error }}</div>
-                {% endif %}
-            </div>
-            <div class="col-lg-7">
-                {% for url in urls %}
-                    <div class="panel panel-default">
-                        <div class="panel-heading"><p>{{ url.name }} </p></div>
-                        <div class="panel-body">
-                            <a href="{{ url.url }}" target="_blank">{{ url.url }}</a>
-                        </div>
-                        <form method="post" action="">
-                            <button type="submit" class="btn btn-default" name="delete" value="{{ url.id }}">Delete
-                            </button>
-                        </form>
-
-                    </div>
-
-                {% endfor %}
+                {% include "site_config.html" ignore missing %}
             </div>
         </div>
-    </div>
     </div>
 {% endblock %}

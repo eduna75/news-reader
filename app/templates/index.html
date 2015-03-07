@@ -35,9 +35,11 @@
                 <div class="col-sm-6">
                     <p>Serving {{ length }} stories from:</p>
                     <div class="list-group">
-                        {% for y in urls %}
-                                <small><a class="list-group-item" href="{{ y.url }}" target="_blank">{{ y.name }}</a></small>
+                        <select multiple="" class="form-control">
+                    {% for y in urls %}
+                                <option><a href="{{ y.url }}" target="_blank">{{ y.name }}</a></option>
                         {% endfor %}
+                </select>
                     </div>
                 </div>
             </div>
