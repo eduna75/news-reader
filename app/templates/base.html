@@ -16,19 +16,6 @@
 
 {% include 'footer.html' ignore missing %}
 
-<script src="/bower_components/jquery/dist/jquery.min.js"></script>
-<script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 
-<script>
-
-    $("#theme_list li").click(function () {
-
-        var theme_drop_down_selected = $('#theme_list li').attr('id');
-        var dirLocator = "/bootswatch/"
-        theme_drop_down_selected = $(this).attr('id');
-        var themeDropDownSelected = dirLocator.concat(theme_drop_down_selected, '/bootstrap.min.css')
-        $('#bootstrap').attr('href', themeDropDownSelected);
-    });
-</script>
 </body>
 </html>
