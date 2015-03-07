@@ -11,58 +11,67 @@
                 </div>
             </div>
         {% endfor %}
-        <div class="well">
-            <a href="logout">Logout</a>
 
-            <div class="row">
-                <div class="col-lg-4">
-                    <form method="post" action="">
-                        <p>insert a new rss feed URL:</p>
-                        <small>eg. http://url.torss.feed/rss</small>
-                        <br>
-                        <input type="text" name="rssurl" placeholder="http://url.to.rss"
-                               value="{{ request.form.rssurl }}">*
-                        <br>
-                        <input type="text" name="name" placeholder="Name" value="{{ request.form.name }}">*
-                        <br>
-                        <input type="text" name="edition" placeholder="Edition" value="{{ request.form.edition }}">
-                        <br>
-                        <input type="radio" id="active" checked value="1">Activate&nbsp;
-                        <input type="radio" id="active" value="0">Deactivate
-                        <br>
-                        <button class="btn-default" name="button">Enter</button>
+        <div class="row">
+            <div class="col-lg-5">
+                <form method="post" action="">
+                    <div class="form-group">
+                        <span class="glyphicon glyphicon-asterisk"></span>
+                        <label for="rssurl">insert a new rss feed</label>
+                        <input type="url" class="form-control" name="rssurl" placeholder="rss feed"
+                               value="{{ request.form.rssurl }}">
+                    </div>
+                    <div class="form-group">
+                        <span class="glyphicon glyphicon-asterisk"></span>
+                        <label for="name">Name of rss feed</label>
+                        <input type="text" required="required" class="form-control" name="name" placeholder="Name"
+                               value="{{ request.form.name }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="edition">additional feed edition / category</label>
+                    <input type="text" class="form-control" name="edition" placeholder="Edition" value="{{ request.form.edition }}">
+                    </div>
+                    <input type="radio" id="active" checked value="1">Activate&nbsp;
+                    <input type="radio" id="active" value="0">Deactivate
+                    <br>
+                      <button type="submit" class="btn btn-default">Submit</button>
 
-                    </form>
-                    <a href="run_post">run post generator</a>
-                    {% for message in get_flashed_messages() %}
-                        <div class="bs-component">
-                            <div class="alert alert-dismissable alert-success">
-                                <button type="button" class="close" data-dismiss="alert">&times;</button>
-                                <p>{{ message }}</p>
-                            </div>
+
+                </form>
+                <ul class="nav navbar">
+                    <li>
+                        <a href="run_post">run post generator</a>
+                    </li>
+                </ul>
+                {% for message in get_flashed_messages() %}
+                    <div class="bs-component">
+                        <div class="alert alert-dismissable alert-success">
+                            <button type="button" class="close" data-dismiss="alert">&times;</button>
+                            <p>{{ message }}</p>
                         </div>
-                    {% endfor %}
+                    </div>
+                {% endfor %}
 
-                    {% if error %}
-                        <div class="alert alert-danger" role="alert">{{ error }}</div>
-                    {% endif %}
-                </div>
-                <div class="col-lg-8">
-                    {% for url in urls %}
-                        <div class="panel panel-default">
-                            <div class="panel-heading"><p>{{ url.name }} </p></div>
-                            <div class="panel-body">
-                                <a href="{{ url.url }}" target="_blank">{{ url.url }}</a>
-                            </div>
-                            <form method="post" action="">
-                                <button class="btn-default" name="delete" value="{{ url.id }}">delete</button>
-                            </form>
-
+                {% if error %}
+                    <div class="alert alert-danger" role="alert">{{ error }}</div>
+                {% endif %}
+            </div>
+            <div class="col-lg-7">
+                {% for url in urls %}
+                    <div class="panel panel-default">
+                        <div class="panel-heading"><p>{{ url.name }} </p></div>
+                        <div class="panel-body">
+                            <a href="{{ url.url }}" target="_blank">{{ url.url }}</a>
                         </div>
+                        <form method="post" action="">
+                              <button type="submit" class="btn btn-default" name="delete" value="{{ url.id }}">Delete</button>
+                        </form>
 
-                    {% endfor %}
-                </div>
+                    </div>
+
+                {% endfor %}
             </div>
         </div>
+    </div>
     </div>
 {% endblock %}
