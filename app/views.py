@@ -43,7 +43,7 @@ def index():
             return redirect(url_for('config'))
 
     return render_template('index.html', post=post, length=len(post), urls=urls, theme_list=g.theme_list[0],
-                           site_config=g.config, error=error, session=session)
+                           site_config=g.config, error=error, session=session, google_id=app.config['GOOGLE_ID'])
 
 
 @app.route('/help')
