@@ -1,5 +1,3 @@
-__author__ = 'justus'
-
 from flask import request, render_template, session, flash, redirect, url_for, g
 from flask.ext.login import LoginManager
 from app.db_connect import DBConnect as DBc
@@ -52,17 +50,23 @@ def config():
             error = "you didn't fill in all the fields: "
         else:
             try:
-                if 1 in request.form.values():
-                    active = 1
+                if request.form['active'] is 'on2':
+                    rss_active = 0
+                elif request.form['active'] is 'on1':
+                    rss_active = 1
                 else:
-                    active = 0
-                form_input = [(request.form['rssurl']), (request.form['name']), active]
+                    rss_active = 1
+                form_input = [(request.form['rssurl']), (request.form['name']), rss_active]
                 g.db.execute('INSERT INTO url(url, name, active) VALUES (?,?,?);', form_input)
                 g.db.commit()
                 return redirect(url_for('run_post'))
             except BaseException as e:
                 print "That didn't go as planned! ", e
                 error = "You didn't fill in all the fields or maybe a double entry:"
+
+    if request.form['btn2']:
+        print "this is form 2"
+        print request.form['active']
 
     return render_template('config.html', theme_list=g.theme_list[0], urls=urls, error=error, site_config=g.config)
 

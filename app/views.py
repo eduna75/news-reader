@@ -3,7 +3,6 @@ __author__ = 'justus'
 from app import app
 from flask import render_template, request, url_for, redirect, session, flash, g
 from app.db_connect import DBConnect as DBc
-from app.authenticate import login_required
 from os import walk
 
 
