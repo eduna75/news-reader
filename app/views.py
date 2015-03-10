@@ -34,7 +34,7 @@ def index():
     # login part
     error = None
     if request.method == 'POST':
-        if request.form['username'] != 'admin' or request.form['password'] != 'admin':
+        if request.form['email'] != 'admin' or request.form['password'] != 'admin':
             error = "You shall not pass!"
         else:
             session['logged_in'] = True

@@ -1,13 +1,8 @@
 from flask import request, render_template, session, flash, redirect, url_for, g
-from flask.ext.login import LoginManager
 from app.db_connect import DBConnect as DBc
 from app import app, post_generator
 from app.authenticate import login_required
 from os import walk
-
-
-login_manager = LoginManager()
-login_manager.init_app(app)
 
 
 @app.before_request
@@ -63,10 +58,6 @@ def config():
             except BaseException as e:
                 print "That didn't go as planned! ", e
                 error = "You didn't fill in all the fields or maybe a double entry:"
-
-    if request.form['btn2']:
-        print "this is form 2"
-        print request.form['active']
 
     return render_template('config.html', theme_list=g.theme_list[0], urls=urls, error=error, site_config=g.config)
 

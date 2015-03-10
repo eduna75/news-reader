@@ -1,17 +1,14 @@
-__author__ = 'justus'
-
-from views import sql_db
+from werkzeug.security import generate_password_hash, check_password_hash
 
 
-class NewsPost(sql_db.Model):
+class User(object):
 
-    id = sql_db.Column(sql_db.Integer, primary_key=True)
-    title = sql_db.Column(sql_db.String, nullable=False)
-    summary = sql_db.Column(sql_db.String, nullable=False)
+    def __init__(self, username, password):
+        self.username = username
+        self.set_password(password)
 
-    def __init__(self, title, description):
-        self.title = title
-        self.description = description
+    def set_password(self, password):
+        self.pw_hash = generate_password_hash(password)
 
-    def __repr__(self):
-        return '<title> {}'.format(self.title)
+    def check_password(self, password):
+        return check_password_hash(self.pw_hash, password)

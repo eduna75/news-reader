@@ -11,19 +11,19 @@
                 <div class="col-sm-6 login">
                     <h4>Login</h4>
 
-                    <form class="" role="form" method="POST">
+                    <form class="" role="form" method="POST" action="/">
                         <div class="form-group">
                             <label class="sr-only" for="username">Email address</label>
-                            <input type="text" class="form-control" id="email" name="username" placeholder="Enter email" value="">
+                            <input type="text" class="form-control" id="email" name="email" placeholder="Enter email" value="" required="required">
                         </div>
                         <div class="form-group">
                             <label class="sr-only" for="password">Password</label>
                             <input type="password" class="form-control" id="password" name="password"
-                                   placeholder="Password" value="">
+                                   placeholder="Password" value="" required="required">
                         </div>
                         <div class="checkbox">
                             <label>
-                                <input type="checkbox"> Remember me
+                                <input type="checkbox" id="remember_me" name="remember_me"> Remember me
                             </label>
                         </div>
                         <input type="submit" class="btn btn-success" value="submit" placeholder="submit">
