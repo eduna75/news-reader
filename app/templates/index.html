@@ -33,14 +33,7 @@
                 </div>
 
                 <div class="col-sm-6">
-                    <p>Serving {{ length }} stories from:</p>
-                    <div class="list-group">
-                        <select multiple="" class="form-control">
-                    {% for y in urls %}
-                                <option><a href="{{ y.url }}" target="_blank">{{ y.name }}</a></option>
-                        {% endfor %}
-                </select>
-                    </div>
+
                 </div>
             </div>
         </div>
@@ -49,39 +42,55 @@
                 <p>Serving, {{ length }} stories</p>
             </blockquote>
             <div class="row">
-            {% set num = 1 %}
-                {% for article_row in post[length:length -101:-1] | batch(50) %}
-                    <div class="col-sm-6">
-                    {% set num = num +1 %}
-                        <div class="list-group">
-                            <div class="panel-group" id="accordion{{ num }}">
-                                {% for p in article_row %}
-                                    <div class="panel panel-default">
-                                        <div class="accordion-heading">
-                                            <a class="accordion-toggle list-group-item list-group-item-warning"
-                                               data-toggle="collapse" data-parent="#accordion{{ num }}"
-                                               href="#{{ p.id }}"><h4>{{ p.title|safe }}</h4>
-                                                <div class="row">
-                                                    <div class="col-sm-6"><small>source: {{ p.source|safe }}</small></div>
-                                                    <div class="col-sm-6"><p class="text-right"><small>date: {{ p.time }}</small></p></div>
-                                                </div>
-                                            </a>
-                                        </div>
-                                        <div id="{{ p.id }}" class="accordion-body collapse open">
-                                            <div class="accordion-inner">
-                                        <span class="list-group-item">
-                                            <small>{{ p.time }}</small><br>
-                                            {{ p.summary|safe }}<br>
+                <div class="hidden-sm hidden-xs col-md-3 col-lg-3">
+
+                    <table class="table table-bordered">
+                        <tbody>
+                        <tr>
+                            <td>
+                                <p>would be good to have something here</p>
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td>
+                                <p>would be good to have something here</p>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                {% set num = 1 %}
+                <div class="col-md-6 col-lg-6">
+                    <div class="list-group">
+                        <div class="panel-group">
+                            {% for p in post[length:length -25:-1] %}
+                                <div class="panel panel-default">
+                                    <div class="list-group-item" href="#{{ p.id }}"><h4>{{ p.title|safe }}</h4>
+                                        <small>{{ p.time }}</small>
+                                        <br>
+                                        {{ p.summary|safe }}<br>
                                         <a href="{{ p.link }}" target="_blank">Read further:</a>
-                                        </span>
+
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <small>source: {{ p.source|safe }}</small>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <p class="text-right">
+                                                    <small>date: {{ p.time }}</small>
+                                                </p>
                                             </div>
                                         </div>
                                     </div>
-                                {% endfor %}
-                            </div>
+                                </div>
+                            {% endfor %}
                         </div>
                     </div>
-                {% endfor %}
+                </div>
+                <div class="hidden-xs hidden-sm col-lg-3">
+                    <p>Just text</p>
+                </div>
             </div>
         </div>
     </div>

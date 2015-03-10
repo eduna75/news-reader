@@ -46,6 +46,9 @@ def run_post():
     return redirect(url_for('config'))
 
 
+"""Form handlers"""
+
+
 @app.route('/news_config', methods=['GET', 'POST'])
 def news_config():
     urls = [dict(id=row[0], url=row[1], name=row[2]) for row in g.db.execute('SELECT * FROM url').fetchall()]
