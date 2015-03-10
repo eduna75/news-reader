@@ -34,6 +34,21 @@ def logout():
 @login_required
 def config():
     urls = [dict(id=row[0], url=row[1], name=row[2]) for row in g.db.execute('SELECT * FROM url').fetchall()]
+    error = None
+    return render_template('config.html', theme_list=g.theme_list[0], urls=urls, error=error, site_config=g.config)
+
+
+@app.route('/run_post')
+@login_required
+def run_post():
+    message = 'post generating finished with %s results' % post_generator.generator()
+    flash(message)
+    return redirect(url_for('config'))
+
+
+@app.route('/news_config', methods=['GET', 'POST'])
+def news_config():
+    urls = [dict(id=row[0], url=row[1], name=row[2]) for row in g.db.execute('SELECT * FROM url').fetchall()]
 
     error = None
     if request.method == 'POST':
@@ -58,13 +73,6 @@ def config():
             except BaseException as e:
                 print "That didn't go as planned! ", e
                 error = "You didn't fill in all the fields or maybe a double entry:"
+        return redirect(url_for('config'))
 
-    return render_template('config.html', theme_list=g.theme_list[0], urls=urls, error=error, site_config=g.config)
-
-
-@app.route('/run_post')
-@login_required
-def run_post():
-    message = 'post generating finished with %s results' % post_generator.generator()
-    flash(message)
-    return redirect(url_for('config'))
+    return render_template('config.html', site_config=g.config, error=error, urls=urls)
