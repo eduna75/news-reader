@@ -4,92 +4,94 @@
 
 {% block content %}
     <div class="container">
-        {% for message in get_flashed_messages() %}
-            <div class="bs-component">
-                <div class="alert alert-dismissable alert-success">
-                    <button type="button" class="close" data-dismiss="alert">&times;</button>
-                    <p>{{ message }}</p>
+        <div class="page-header">
+            {% for message in get_flashed_messages() %}
+                <div class="bs-component">
+                    <div class="alert alert-dismissable alert-success">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        <p>{{ message }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+            {% if error %}
+                <div class="bs-component">
+                    <div class="alert alert-dismissable alert-danger">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        <p>{{ error }}</p>
+                    </div>
+                </div>
+            {% endif %}
+            <div class="">
+                <div class="row">
+                    <div class="col-sm-6">
+                        {% for config in site_config %}
+                            <h1>{{ config.title }}
+                                <small><br>
+                                    {{ config.slogan }}
+                                </small>
+                            </h1>
+                        {% endfor %}
+                    </div>
+
+                    <div class="col-sm-6">
+
+                    </div>
                 </div>
             </div>
-        {% endfor %}
-        {% if error %}
-            <div class="bs-component">
-                <div class="alert alert-dismissable alert-danger">
-                    <button type="button" class="close" data-dismiss="alert">&times;</button>
-                    <p>{{ error }}</p>
-                </div>
-            </div>
-        {% endif %}
-        <div class="">
-            <div class="row">
-                <div class="col-sm-6">
-                    {% for config in site_config %}
-                        <h1>{{ config.title }}
-                            <small><br>
-                                {{ config.slogan }}
-                            </small>
-                        </h1>
-                    {% endfor %}
-                </div>
+            <div class="">
+                <blockquote>
+                    <p>Serving, {{ length }} stories</p>
+                </blockquote>
+                <div class="row">
+                    <div class="hidden-sm hidden-xs col-md-3 col-lg-3">
 
-                <div class="col-sm-6">
+                        <table class="table table-bordered">
+                            <tbody>
+                            <tr>
+                                <td>
+                                    <p>would be good to have something here</p>
+                                </td>
 
-                </div>
-            </div>
-        </div>
-        <div class="">
-            <blockquote>
-                <p>Serving, {{ length }} stories</p>
-            </blockquote>
-            <div class="row">
-                <div class="hidden-sm hidden-xs col-md-3 col-lg-3">
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>would be good to have something here</p>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    {% set num = 1 %}
+                    <div class="col-md-6 col-lg-6">
+                        <div class="list-group">
+                            <div class="panel-group">
+                                {% for p in post[length:length -50:-1] %}
+                                    <div class="panel panel-default">
+                                        <div class="list-group-item" href="#{{ p.id }}"><h4>{{ p.title|safe }}</h4>
+                                            <small>{{ p.time }}</small>
+                                            <br>
+                                            {{ p.summary|safe }}<br>
+                                            <a href="{{ p.link }}" target="_blank">Read further:</a>
 
-                    <table class="table table-bordered">
-                        <tbody>
-                        <tr>
-                            <td>
-                                <p>would be good to have something here</p>
-                            </td>
-
-                        </tr>
-                        <tr>
-                            <td>
-                                <p>would be good to have something here</p>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-                {% set num = 1 %}
-                <div class="col-md-6 col-lg-6">
-                    <div class="list-group">
-                        <div class="panel-group">
-                            {% for p in post[length:length -25:-1] %}
-                                <div class="panel panel-default">
-                                    <div class="list-group-item" href="#{{ p.id }}"><h4>{{ p.title|safe }}</h4>
-                                        <small>{{ p.time }}</small>
-                                        <br>
-                                        {{ p.summary|safe }}<br>
-                                        <a href="{{ p.link }}" target="_blank">Read further:</a>
-
-                                        <div class="row">
-                                            <div class="col-sm-6">
-                                                <small>source: {{ p.source|safe }}</small>
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <p class="text-right">
-                                                    <small>date: {{ p.time }}</small>
-                                                </p>
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <small>source: {{ p.source|safe }}</small>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <p class="text-right">
+                                                        <small>date: {{ p.time }}</small>
+                                                    </p>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            {% endfor %}
+                                {% endfor %}
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="hidden-xs hidden-sm col-lg-3">
-                    <p>Just text</p>
+                    <div class="hidden-xs hidden-sm col-lg-3">
+                        <p>Just text</p>
+                    </div>
                 </div>
             </div>
         </div>
