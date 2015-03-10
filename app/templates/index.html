@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}News from Thailand, headlines from Thailand{% endblock %}
+{% block title %}News headlines{% endblock %}
 
 {% block content %}
     <div class="container">
@@ -21,7 +21,7 @@
                     </div>
                 </div>
             {% endif %}
-            <div class="">
+            <div class="well">
                 <div class="row">
                     <div class="col-sm-6">
                         {% for config in site_config %}
@@ -65,7 +65,7 @@
                     <div class="col-md-6 col-lg-6">
                         <div class="list-group">
                             <div class="panel-group">
-                                {% for p in post[length:length -50:-1] %}
+                                {% for p in post[length:length -150:-1] %}
                                     <div class="panel panel-default">
                                         <div class="list-group-item" href="#{{ p.id }}"><h4>{{ p.title|safe }}</h4>
                                             <small>{{ p.time }}</small>
