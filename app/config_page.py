@@ -30,7 +30,7 @@ def logout():
     return redirect(url_for('index'))
 
 
-@app.route('/config', methods=['GET', 'POST'])
+@app.route('/config')
 @login_required
 def config():
     urls = [dict(id=row[0], url=row[1], name=row[2]) for row in g.db.execute('SELECT * FROM url').fetchall()]
@@ -53,29 +53,36 @@ def run_post():
 def news_config():
     urls = [dict(id=row[0], url=row[1], name=row[2]) for row in g.db.execute('SELECT * FROM url').fetchall()]
 
+    rss_active = 1
     error = None
     if request.method == 'POST':
-        if 'delete' in request.values:
-            g.db.execute('DELETE FROM url WHERE url_id=?', request.form.values())
-            g.db.commit()
-            return redirect(url_for('config'))
-        elif request.form['rssurl'] is None or '' and request.form['name'] is None or '':
-            error = "you didn't fill in all the fields: "
-        else:
-            try:
-                if request.form['active'] is 'on2':
-                    rss_active = 0
-                elif request.form['active'] is 'on1':
-                    rss_active = 1
-                else:
-                    rss_active = 1
+        if request.form['active'] is 'on2':
+            rss_active = 0
+        elif request.form['active'] is 'on1':
+            rss_active = 1
+        try:
+            if request.form['rssurl'] is None or '' and request.form['name'] is None or '':
+                error = "you didn't fill in all the fields: "
+            else:
                 form_input = [(request.form['rssurl']), (request.form['name']), rss_active]
                 g.db.execute('INSERT INTO url(url, name, active) VALUES (?,?,?);', form_input)
                 g.db.commit()
-                return redirect(url_for('run_post'))
-            except BaseException as e:
-                print "That didn't go as planned! ", e
-                error = "You didn't fill in all the fields or maybe a double entry:"
+        except BaseException as e:
+            print "That didn't go as planned! ", e
+            error = "You didn't fill in all the fields or maybe a double entry:"
         return redirect(url_for('config'))
 
-    return render_template('config.html', site_config=g.config, error=error, urls=urls)
+    return redirect(url_for('config'))
+
+
+@app.route('/delete_feed', methods=['GET', 'POST'])
+def delete_feed():
+    print request.form
+    if request.method == 'POST':
+        print request.values
+        if 'delete' in request.values:
+            g.db.execute('DELETE FROM url WHERE url_id=?', request.form.values())
+            g.db.commit()
+            flash('rss feed has been deleted')
+            return redirect(url_for('config'))
+    return redirect(url_for('config'))
