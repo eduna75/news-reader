@@ -1,3 +1,29 @@
 <div class="well">
     <h2>Site Configuration</h2>
 </div>
+<div class="row">
+    <div class="col-sm-6">
+        Cur impositio peregrinatione?
+        Triticums trabem in cubiculum!
+        A falsis, triticum salvus boreas. Armariums assimilant, tanquam neuter valebat.
+        Fiscinas tolerare, tanquam barbatus medicina. Sunt genetrixes dignus noster, peritus absolutioes.
+        Pol. Omnias unda in cirpi! Superbus, varius eras interdum magicae de peritus, magnum demissio.
+    </div>
+    <div class="col-sm-6">
+        <div>
+        <form id="myForm" method="post" action="set_template">
+            <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="themes">Themes <span
+                            class="caret"></span></a>
+                    <ul id="theme_list" class="dropdown-menu" aria-labelledby="themes">
+                        {% for theme in theme_list %}
+                            <li id="{{ theme }}"><a href="#">{{ theme }}</a></li>
+                        {% endfor %}
+                    </ul>
+            <p>Set here system wide theme.</p>
+                </li>
+                <button type="submit" id="btn" name="btn_theme" class="btn btn-default" value="">Submit</button>
+        </form>
+        </div>
+    </div>
+</div>

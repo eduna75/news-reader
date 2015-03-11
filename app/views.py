@@ -55,6 +55,11 @@ def page_not_found(e):
     return render_template('404.html', theme_list=g.theme_list[0], site_config=g.config, e=e), 404
 
 
+@app.errorhandler(400)
+def page_not_found(e):
+    return render_template('404.html', theme_list=g.theme_list[0], site_config=g.config, e=e), 400
+
+
 @app.errorhandler(401)
 def page_not_found(e):
     return render_template('404.html', theme_list=g.theme_list[0], site_config=g.config, e=e), 401

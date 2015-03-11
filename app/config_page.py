@@ -34,6 +34,7 @@ def logout():
 @login_required
 def config():
     urls = [dict(id=row[0], url=row[1], name=row[2]) for row in g.db.execute('SELECT * FROM url').fetchall()]
+    active = []
     error = None
     return render_template('config.html', theme_list=g.theme_list[0], urls=urls, error=error, site_config=g.config)
 
@@ -53,6 +54,7 @@ def run_post():
 def news_config():
     urls = [dict(id=row[0], url=row[1], name=row[2]) for row in g.db.execute('SELECT * FROM url').fetchall()]
 
+    active = 'active in'
     rss_active = 1
     error = None
     if request.method == 'POST':
@@ -86,3 +88,12 @@ def delete_feed():
             flash('rss feed has been deleted')
             return redirect(url_for('config'))
     return redirect(url_for('config'))
+
+
+@app.route('/set_template', methods=['GET', 'POST'])
+def set_template():
+    if request.method == 'POST':
+        theme = request.form['btn_theme']
+        g.db.execute('UPDATE config SET system_theme =?', (theme,))
+        g.db.commit()
+    return redirect(url_for('config', ))
