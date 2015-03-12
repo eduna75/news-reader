@@ -97,3 +97,13 @@ def set_template():
         g.db.execute('UPDATE config SET system_theme =?', (theme,))
         g.db.commit()
     return redirect(url_for('config', ))
+
+
+@app.route('/main_config', methods=['GET', 'POST'])
+def main_config():
+    if request.method == 'POST':
+        data = [(request.form['site_name']), (request.form['slogan'])]
+        print data
+        g.db.execute('UPDATE config SET name_website = ?, slogan = ?', data)
+        g.db.commit()
+    return redirect(url_for('config'))
