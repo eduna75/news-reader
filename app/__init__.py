@@ -5,6 +5,8 @@ import os
 
 app = Flask(__name__, static_path='')
 from app import views
-from app import config_page
+from app.backend.views import node as backend_node
 
+
+app.register_blueprint(backend_node)
 app.config.from_object(os.environ['APP_SETTINGS'])

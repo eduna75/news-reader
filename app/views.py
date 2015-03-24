@@ -39,7 +39,7 @@ def index():
         else:
             session['logged_in'] = True
             flash('You are now logged in!')
-            return redirect(url_for('config'))
+            return redirect(url_for('backend.backend'))
 
     return render_template('index.html', post=post, length=len(post), urls=urls, theme_list=g.theme_list[0],
                            site_config=g.config, error=error, session=session, google_id=app.config['GOOGLE_ID'])
