@@ -16,7 +16,7 @@
         $("#theme_list li").click(function () {
             var theme_drop_down_selected2 = $('#theme_list li').attr('id');
             theme_drop_down_selected2 = $(this).attr('id');
-            $('#btn').attr('value', theme_drop_down_selected2);
+            $('#btn_theme').attr('value', theme_drop_down_selected2);
             $('myForm').append("<input type='hidden' name='submitValue' value='" + theme_drop_down_selected2 + "' />");
             $('#myForm').trigger('select');
         });

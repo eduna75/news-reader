@@ -93,6 +93,7 @@ def delete_feed():
 @app.route('/set_template', methods=['GET', 'POST'])
 def set_template():
     if request.method == 'POST':
+        print request.form['btn_theme']
         theme = request.form['btn_theme']
         g.db.execute('UPDATE config SET system_theme =?', (theme,))
         g.db.commit()
