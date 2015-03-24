@@ -1,14 +1,12 @@
 __author__ = 'justus'
 
 import feedparser
-import sqlite3
-import threading
+from app.db_connect import DBConnect as DBc
 
 
 def generator():
-    threading.Timer(900, generator).start()
 
-    link = sqlite3.connect('app/news-reader.db')
+    link = DBc.db_connect()
     links = link.execute('SELECT * FROM url')
     total_committed = 0
     total_double = 0
@@ -17,8 +15,8 @@ def generator():
         feeds = feedparser.parse(l[1])
         for i in xrange(0, len(feeds['entries'])):
             try:
-                post = [(feeds['entries'][i].title), (feeds['entries'][i].summary), (feeds['entries'][i].link),
-                        (feeds['feed'].title), (url_id), (feeds['entries'][i].published)]
+                post = [feeds['entries'][i].title, feeds['entries'][i].summary, feeds['entries'][i].link,
+                        feeds['feed'].title, url_id, feeds['entries'][i].published]
                 print post, '\n'
             except BaseException as e:
                 print 'could not extract everything', e

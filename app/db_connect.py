@@ -10,7 +10,7 @@ class DBConnect:
 
     @staticmethod
     def db_connect():
-        conn = sqlite3.connect('app/news-reader.db')
+        conn = sqlite3.connect('news-reader.db')
         return conn
 
     def con_config(self):

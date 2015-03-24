@@ -2,9 +2,10 @@
 {% block title %}Configuration platform{% endblock %}
 
 {% block content %}
+
     <div class="container">
+    <hr>
         <div class="page-header">
-            <hr>
             <ul class="nav nav-tabs">
                 <li class="active"><a aria-expanded="true" href="#News" data-toggle="tab">News</a></li>
                 <li class=""><a aria-expanded="false" href="#site_config" data-toggle="tab">Site Config</a></li>
@@ -14,7 +15,7 @@
                     {% include "backend/news_config.html" ignore missing %}
                 </div>
                 <div class="tab-pane fade" id="site_config">
-                {% include "backend/site_config.html" ignore missing %}
+                    {% include "backend/site_config.html" ignore missing %}
                 </div>
             </div>
         </div>
