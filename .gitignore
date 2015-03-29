@@ -4,3 +4,4 @@ venv
 app/news-reader.db-journal
 news-reader.db
 db_backup
+app.db

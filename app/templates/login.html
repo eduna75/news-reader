@@ -11,32 +11,33 @@
                 <div class="col-sm-6 login">
                     <h4>Login</h4>
 
-                    <form class="" role="form" method="POST" action="/">
-                        <div class="form-group">
-                            <label class="sr-only" for="username">Email address</label>
-                            <input type="text" class="form-control" id="email" name="email" placeholder="Enter email" value="" required="required">
-                        </div>
-                        <div class="form-group">
-                            <label class="sr-only" for="password">Password</label>
-                            <input type="password" class="form-control" id="password" name="password"
-                                   placeholder="Password" value="" required="required">
-                        </div>
+                    <form class="" method="POST" action="/">
+                <div class="form-group">
+                <p>Login stuff will be here!</p>
+            {% for message in get_flashed_messages() %}
+                {{ message }}
+            {% endfor %}
+            </div>
+                {{ form.csrf_token }}
+                <div class="form-group"><div>{{ form.email.label }}: {{ form.email(class="form-control") }}</div></div>
+                <div class="form-group"><div>{{ form.password.label }}: {{ form.password(class="form-control") }}</div></div>
                         <div class="checkbox">
                             <label>
                                 <input type="checkbox" id="remember_me" name="remember_me"> Remember me
                             </label>
                         </div>
                         <input type="submit" class="btn btn-success" value="submit" placeholder="submit">
-                    </form>
+            </form>
                 </div>
                 <div class="col-sm-6">
                     <h4>New User Sign Up</h4>
 
                     <p>Join today and get updated with all the headlines of right now.</p>
-                    <button type="submit" class="btn btn-info" onclick="window.location.href='register'">Join Now
+                    <button type="submit" class="btn btn-info" data-toggle="modal"
+                            data-target="#reModal">Join Now
                     </button>
                 </div>
-
+                {% include "register.html" ignore missing %}
             </div>
             </div>
         </div>

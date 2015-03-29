@@ -25,7 +25,7 @@
                     <a href="help">Help</a>
                 </li>
 
-                {% if "logged_in" in session %}
+                {% if "user_id" in session %}
                     <li>
                         <a href="backend">Config</a>
                     </li>
@@ -44,7 +44,10 @@
 
 
             </ul>
-            {% include "login.html" ignore missing %}
+            {% if 'user_id' in session %}
+            {% else %}
+                {% include "login.html" ignore missing %}
+            {% endif %}
         </div>
     </div>
 </div>

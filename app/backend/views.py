@@ -1,9 +1,10 @@
+from app.forms import LoginForm
 from os import walk
+from app.login.models import User
 from flask import Blueprint, render_template, g, request, redirect, url_for, flash, session
 from app.db_connect import DBConnect as DBc
 from app.authenticate import login_required
 from app import post_generator
-
 
 
 node = Blueprint('backend', __name__, url_prefix='/backend')
@@ -13,6 +14,10 @@ node = Blueprint('backend', __name__, url_prefix='/backend')
 def before_request():
     g.db = DBc.db_connect()
     g.config = DBc().con_config()
+    g.user = None
+
+    if 'user_id' in session:
+        g.user = User.query.get(session['user_id'])
 
     g.theme_list = []
     for root, dir_name, file_name in walk('./app/static/bootswatch'):
@@ -27,9 +32,8 @@ def teardown_request(exception):
 
 
 @node.route('/logout/')
-@login_required
 def logout():
-    session.pop('logged_in', None)
+    session.pop('user_id', None)
     flash('You are logged out!')
     return redirect(url_for('index'))
 
@@ -48,7 +52,7 @@ def backend():
 def run_post():
     message = 'post generating finished with %s results' % post_generator.generator()
     flash(message)
-    return redirect(url_for('backend.backend'))
+    return redirect(url_for('index'))
 
 
 """Form handlers"""
