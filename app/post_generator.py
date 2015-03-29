@@ -1,6 +1,7 @@
 __author__ = 'justus'
 
 import feedparser
+from app.login.models import RSSFeed
 from app.db_connect import DBConnect as DBc
 
 
@@ -31,5 +32,12 @@ def generator():
     link.close()
 
 
+def fetch_posts(url_id):
+    post = RSSFeed.query.filter_by(id=url_id).first()
+    print post.url
+    print post.name
+    print post.id
+
+
 if __name__ == "__main__":
-    generator()
+    fetch_posts(1)

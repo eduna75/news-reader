@@ -45,7 +45,7 @@ def index():
         if user and check_password_hash(user.password, form.password.data):
             session['user_id'] = user.id
             flash(u'Welcome %r' % user.name)
-            return redirect(url_for('index'))
+            return redirect(url_for('backend.run_post'))
         flash(u'Wrong email or password')
     return render_template('index.html', post=post, length=len(post), urls=urls, theme_list=g.theme_list[0],
                            site_config=g.config, form=form, regform=g.regform, session=session, google_id=app.config[
