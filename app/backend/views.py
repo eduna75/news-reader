@@ -1,4 +1,3 @@
-from app.forms import LoginForm
 from os import walk
 from app.login.models import User
 from flask import Blueprint, render_template, g, request, redirect, url_for, flash, session

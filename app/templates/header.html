@@ -13,16 +13,16 @@
         <div class="navbar-collapse collapse" id="navbar-main">
             <ul class="nav navbar-nav">
                 {% if 'user_id' in session %}
-            <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="themes">Themes <span
-                            class="caret"></span></a>
-                    <ul id="theme_list" class="dropdown-menu" aria-labelledby="themes">
-                        {% for theme in theme_list %}
-                            <li id="{{ theme }}"><a href="#">{{ theme }}</a></li>
-                        {% endfor %}
-                    </ul>
-                </li>
-            {% endif %}
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="themes">Themes <span
+                                class="caret"></span></a>
+                        <ul id="theme_list" class="dropdown-menu" aria-labelledby="themes">
+                            {% for theme in theme_list %}
+                                <li id="{{ theme }}"><a href="#">{{ theme }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                {% endif %}
                 <li>
                     <a href="help">Help</a>
                 </li>
@@ -43,13 +43,16 @@
                         <a href="#" data-toggle="modal" data-target="#myModal">Login</a>
                     </li>
                 {% endif %}
-
-
             </ul>
             {% if 'user_id' in session %}
             {% else %}
                 {% include "login.html" ignore missing %}
             {% endif %}
+        <div class="pull-right">
+            {% if 'user_id' in session %}
+                <p>Hello, {{ name }}</p>
+            {% endif %}
+        </div>
         </div>
     </div>
 </div>

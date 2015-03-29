@@ -14,4 +14,3 @@ class RegistrationForm(Form):
     password = PasswordField('New Password', [Required()])
     confirm = PasswordField('Repeat Password', [EqualTo('confirm', message='Passwords must match')])
     accept_tos = BooleanField('I accept the TOS', [Required()])
-    recaptcha = RecaptchaField('Recaptcha', [Required()])

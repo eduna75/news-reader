@@ -12,9 +12,11 @@ def before_request():
     g.db = DBc.db_connect()
     g.config = DBc().con_config()
     g.user = None
+    g.name = None
 
     if 'user_id' in session:
         g.user = User.query.get(session['user_id'])
+        g.name = g.user.name
 
     g.theme_list = []
     for root, dir_name, file_name in walk('./app/static/bootswatch'):
@@ -33,6 +35,7 @@ def teardown_request(exception):
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
+    name = None
     post = [dict(id=row[0], title=row[1], summary=row[2], link=row[3], source=row[10], time=row[4]) for row in
             g.db.execute('SELECT * FROM news INNER JOIN url ON source=url_id').fetchall()]
 
@@ -49,7 +52,7 @@ def index():
         flash(u'Wrong email or password')
     return render_template('index.html', post=post, length=len(post), urls=urls, theme_list=g.theme_list[0],
                            site_config=g.config, form=form, regform=g.regform, session=session, google_id=app.config[
-            'GOOGLE_ID'])
+            'GOOGLE_ID'], name=g.name)
 
 
 @app.route('/help')
@@ -81,12 +84,8 @@ def page_not_found(e):
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     regform = RegistrationForm(request.form)
-    print regform.name.data
-    print regform.email.data
-    print regform.password.data
     try:
-        if regform.is_submitted():
-            print 'this'
+        if regform.is_submitted() and regform.validate_on_submit():
             user = User(name=regform.name.data, email=regform.email.data,
                         password=generate_password_hash(regform.password.data))
             db.session.add(user)
@@ -94,8 +93,11 @@ def register():
 
             session['user_id'] = user.id
 
-            return redirect(url_for('index'))
+            return redirect(url_for('backend.run_post'))
     except BaseException as e:
         print e
+    else:
+        flash(regform.errors)
+        return redirect(url_for('index'))
     return render_template('register.html', form=g.form, regform=regform, theme_list=g.theme_list[0],
                            site_config=g.config)
