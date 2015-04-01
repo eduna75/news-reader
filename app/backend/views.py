@@ -46,14 +46,6 @@ def backend():
                            site_config=g.config)
 
 
-@node.route('/run_post/')
-@login_required
-def run_post():
-    message = 'post generating finished with %s results' % post_generator.generator()
-    flash(message)
-    return redirect(url_for('index'))
-
-
 """Form handlers"""
 
 

@@ -5,7 +5,7 @@
 {% block content %}
     <div class="container">
         <div class="page-header">
-        <hr>
+            <hr>
             {% for message in get_flashed_messages() %}
                 <div class="bs-component">
                     <div class="alert alert-dismissable alert-success">
@@ -22,27 +22,33 @@
                     </div>
                 </div>
             {% endif %}
-            <div class="well">
-                <div class="row">
-                    <div class="col-sm-6">
-                        {% for config in site_config %}
-                            <h1>{{ config.title }}
-                                <small><br>
-                                    {{ config.slogan }}
-                                </small>
-                            </h1>
-                        {% endfor %}
-                    </div>
+            {% if 'user_id' in session %}
+            {% else %}
+                <div class="well">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            {% for config in site_config %}
+                                <h1>{{ config.title }}
+                                    <small><br>
+                                        {{ config.slogan }}
+                                    </small>
+                                </h1>
+                            {% endfor %}
+                        </div>
 
-                    <div class="col-sm-6">
+                        <div class="col-sm-6">
 
+                        </div>
                     </div>
                 </div>
-            </div>
+            {% endif %}
+
             <div class="">
                 <blockquote>
                     <p>Serving stories from all over the world!</p>
                 </blockquote>
+
+                {% if 'user_id' in session %}
                 <div class="row">
                     <div class="hidden-sm hidden-xs col-md-3 col-lg-3">
 
@@ -56,12 +62,12 @@
                             </tr>
                             </tbody>
                         </table>
+                        {{ story }}
                     </div>
-                    {% set num = 1 %}
                     <div class="col-md-6 col-lg-6">
                         <div class="list-group">
                             <div class="panel-group">
-                                {% for p in post[length:length -150:-1] %}
+                                {% for p in post %}
                                     <div class="panel panel-default">
                                         <div class="list-group-item" href="#{{ p.id }}"><h4>{{ p.title|safe }}</h4>
                                             <small>{{ p.time }}</small>
@@ -71,11 +77,11 @@
 
                                             <div class="row">
                                                 <div class="col-sm-6">
-                                                    <small>source: {{ p.source|safe }}</small>
+                                                    <small>source: {{ p.link|safe }}</small>
                                                 </div>
                                                 <div class="col-sm-6">
                                                     <p class="text-right">
-                                                        <small>date: {{ p.time }}</small>
+                                                        <small>date: {{ p.published }}</small>
                                                     </p>
                                                 </div>
                                             </div>
@@ -89,6 +95,10 @@
                         <p>Just text</p>
                     </div>
                 </div>
+                {% else %}
+
+                {% endif %}
+
             </div>
         </div>
     </div>

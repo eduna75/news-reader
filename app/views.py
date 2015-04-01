@@ -1,6 +1,7 @@
 from app import app, db
 from app.forms import LoginForm, RegistrationForm
 from app.login.models import User
+from app.post_generator import logon
 from flask import render_template, request, url_for, redirect, session, flash, g
 from app.db_connect import DBConnect as DBc
 from os import walk
@@ -35,11 +36,12 @@ def teardown_request(exception):
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    name = None
-    post = [dict(id=row[0], title=row[1], summary=row[2], link=row[3], source=row[10], time=row[4]) for row in
-            g.db.execute('SELECT * FROM news INNER JOIN url ON source=url_id').fetchall()]
 
-    urls = [dict(id=row[0], url=row[1], name=row[2]) for row in g.db.execute('SELECT * FROM url').fetchall()]
+    if 'user_id' in session:
+        feeds = logon()
+        return render_template('index.html', post=feeds, theme_list=g.theme_list[0],
+                               site_config=g.config, regform=g.regform, session=session, google_id=app.config
+            ['GOOGLE_ID'], name=g.name)
 
     # login part
     form = LoginForm(request.form)
@@ -48,9 +50,9 @@ def index():
         if user and check_password_hash(user.password, form.password.data):
             session['user_id'] = user.id
             flash(u'Welcome %r' % user.name)
-            return redirect(url_for('backend.run_post'))
+            return redirect(url_for('index'))
         flash(u'Wrong email or password')
-    return render_template('index.html', post=post, length=len(post), urls=urls, theme_list=g.theme_list[0],
+    return render_template('index.html', theme_list=g.theme_list[0],
                            site_config=g.config, form=form, regform=g.regform, session=session, google_id=app.config[
             'GOOGLE_ID'], name=g.name)
 

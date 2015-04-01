@@ -1,12 +1,8 @@
-__author__ = 'justus'
-
 import feedparser
-from app.login.models import RSSFeed
 from app.db_connect import DBConnect as DBc
 
 
 def generator():
-
     link = DBc.db_connect()
     links = link.execute('SELECT * FROM url')
     total_committed = 0
@@ -22,7 +18,8 @@ def generator():
             except BaseException as e:
                 print 'could not extract everything', e
             try:
-                link.execute('INSERT INTO news(title, summary, link, publisher, source, date) VALUES (?,?,?,?,?,?);', post)
+                link.execute('INSERT INTO news(title, summary, link, publisher, source, date) VALUES (?,?,?,?,?,?);',
+                             post)
                 link.commit()
                 total_committed += 1
             except BaseException as e:
@@ -32,12 +29,22 @@ def generator():
     link.close()
 
 
-def fetch_posts(url_id):
-    post = RSSFeed.query.filter_by(id=url_id).first()
-    print post.url
-    print post.name
-    print post.id
+def fetch(urls):
+    feed = []
+    for l in urls:
+        feeds = feedparser.parse(l)
+        for i in xrange(0, len(feeds['entries'])):
+            entries = {'title': feeds['entries'][i].title, 'summary': feeds['entries'][i].summary,
+                       'link': feeds['entries'][i].link, 'f_title': feeds['feed'].title,
+                       'published': feeds['entries'][i].published}
+            feed.append(entries)
 
+    return feed
+
+
+def logon():
+    feeds = ('http://englishnews.thaipbs.or.th/feed', 'http://www.bangkokpost.com/rss/data/topstories.xml')
+    return fetch(feeds)
 
 if __name__ == "__main__":
-    fetch_posts(1)
+    pass
