@@ -17,7 +17,7 @@ def before_request():
 
     if 'user_id' in session:
         g.user = User.query.get(session['user_id'])
-        g.name = g.user.name
+        g.name = g.user.nickname
 
     g.theme_list = []
     for root, dir_name, file_name in walk('./app/static/bootswatch'):
@@ -38,10 +38,10 @@ def teardown_request(exception):
 def index():
 
     if 'user_id' in session:
-        feeds = logon()
-        return render_template('index.html', post=feeds, theme_list=g.theme_list[0],
+        feeds = logon(g.user.id)
+        return render_template('index.html', feeds=feeds, theme_list=g.theme_list[0],
                                site_config=g.config, regform=g.regform, session=session, google_id=app.config
-            ['GOOGLE_ID'], name=g.name)
+                               ['GOOGLE_ID'], name=g.name)
 
     # login part
     form = LoginForm(request.form)
@@ -49,12 +49,12 @@ def index():
         user = User.query.filter_by(email=form.email.data).first()
         if user and check_password_hash(user.password, form.password.data):
             session['user_id'] = user.id
-            flash(u'Welcome %r' % user.name)
+            flash(u'Welcome %r' % user.nickname)
             return redirect(url_for('index'))
         flash(u'Wrong email or password')
     return render_template('index.html', theme_list=g.theme_list[0],
                            site_config=g.config, form=form, regform=g.regform, session=session, google_id=app.config[
-            'GOOGLE_ID'], name=g.name)
+                           'GOOGLE_ID'], name=g.name)
 
 
 @app.route('/help')

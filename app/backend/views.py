@@ -1,9 +1,8 @@
+from app import db
 from os import walk
-from app.login.models import User
+from app.login.models import User, Post
 from flask import Blueprint, render_template, g, request, redirect, url_for, flash, session
 from app.db_connect import DBConnect as DBc
-from app.authenticate import login_required
-from app import post_generator
 
 
 node = Blueprint('backend', __name__, url_prefix='/backend')
@@ -65,9 +64,10 @@ def news_config():
             if request.form['rssurl'] is None or '' and request.form['name'] is None or '':
                 error = "you didn't fill in all the fields: "
             else:
-                form_input = [(request.form['rssurl']), (request.form['name']), rss_active]
-                g.db.execute('INSERT INTO url(url, name, active) VALUES (?,?,?);', form_input)
-                g.db.commit()
+                link = Post(request.form['rssurl'], request.form['name'])
+                db.session.add(link)
+                db.session.commit()
+
         except BaseException as e:
             print "That didn't go as planned! ", e
             error = "You didn't fill in all the fields or maybe a double entry:"

@@ -5,14 +5,15 @@ from datetime import datetime
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(80), unique=True)
+    nickname = db.Column(db.String(80), unique=True)
     email = db.Column(db.String(120), unique=True)
     password = db.Column(db.String(120))
     role = db.Column(db.SmallInteger, default=USER.USER)
     status = db.Column(db.SmallInteger, default=USER.NEW)
+    urls = db.relationship('Post', secondary='urls', backref=db.backref('users', lazy='dynamic'))
 
-    def __init__(self, name, email, password=None):
-        self.name = name
+    def __init__(self, nickname, email, password=None):
+        self.nickname = nickname
         self.email = email
         self.password = password
 
@@ -23,29 +24,29 @@ class User(db.Model):
         return USER.ROLE[self.role]
 
     def __repr__(self):
-        return '<User %r>' % self.name
+        return '<User %r>' % self.nickname
+
+    rel = db.Table('urls',
+                   db.Column('post_id', db.Integer, db.ForeignKey('post.id')),
+                   db.Column('user_id', db.Integer, db.ForeignKey('user.id'))
+                   )
 
 
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(80))
-    body = db.Column(db.Text)
+    name = db.Column(db.String, unique=True)
+    url = db.Column(db.String, unique=True)
     pub_date = db.Column(db.DateTime)
 
-    category_id = db.Column(db.Integer, db.ForeignKey('category.id'))
-    category = db.relationship('Category',
-                               backref=db.backref('posts', lazy='dynamic'))
-
-    def __init__(self, title, body, category, pub_date=None):
-        self.title = title
-        self.body = body
+    def __init__(self, name, url, pub_date=None):
+        self.name = name
+        self.url = url
         if pub_date is None:
             pub_date = datetime.utcnow()
         self.pub_date = pub_date
-        self.category = category
 
     def __repr__(self):
-        return '<Post %r>' % self.title
+        return '<Post %r %r>' % (self.name, self.url)
 
 
 class Category(db.Model):

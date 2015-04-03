@@ -1,3 +1,4 @@
+from app.login.models import Post, User
 import feedparser
 from app.db_connect import DBConnect as DBc
 
@@ -31,20 +32,24 @@ def generator():
 
 def fetch(urls):
     feed = []
-    for l in urls:
-        feeds = feedparser.parse(l)
+    for links in urls:
+        feeds = feedparser.parse(links.url)
         for i in xrange(0, len(feeds['entries'])):
             entries = {'title': feeds['entries'][i].title, 'summary': feeds['entries'][i].summary,
                        'link': feeds['entries'][i].link, 'f_title': feeds['feed'].title,
-                       'published': feeds['entries'][i].published}
+                       'published': feeds['entries'][i].published, 'publisher': links.name}
             feed.append(entries)
 
     return feed
 
 
-def logon():
-    feeds = ('http://englishnews.thaipbs.or.th/feed', 'http://www.bangkokpost.com/rss/data/topstories.xml')
-    return fetch(feeds)
+def logon(id):
+    urls = []
+    feeds = Post.query.join(User.urls).filter(User.id == id).all()
+    for feed in feeds:
+        urls.append(feed)
+    return fetch(urls)
+
 
 if __name__ == "__main__":
     pass

@@ -45,7 +45,11 @@
 
             <div class="">
                 <blockquote>
-                    <p>Serving stories from all over the world!</p>
+                    <p><div class="pull-right">
+            {% if 'user_id' in session %}
+                <p>Hello, {{ name }}</p>
+            {% endif %}
+        </div>Serving stories from all over the world!</p>
                 </blockquote>
 
                 {% if 'user_id' in session %}
@@ -67,21 +71,21 @@
                     <div class="col-md-6 col-lg-6">
                         <div class="list-group">
                             <div class="panel-group">
-                                {% for p in post %}
+                                {% for feed in feeds %}
                                     <div class="panel panel-default">
-                                        <div class="list-group-item" href="#{{ p.id }}"><h4>{{ p.title|safe }}</h4>
-                                            <small>{{ p.time }}</small>
+                                        <div class="list-group-item" href="#{{ feed.id }}"><h4>{{ feed.title|safe }}</h4>
+                                            <small>{{ feed.time }}</small>
                                             <br>
-                                            {{ p.summary|safe }}<br>
-                                            <a href="{{ p.link }}" target="_blank">Read further:</a>
+                                            {{ feed.summary|safe }}<br>
+                                            <a href="{{ feed.link }}" target="_blank">Read further:</a>
 
                                             <div class="row">
                                                 <div class="col-sm-6">
-                                                    <small>source: {{ p.link|safe }}</small>
+                                                    <small>source: {{ feed.publisher }}</small>
                                                 </div>
                                                 <div class="col-sm-6">
                                                     <p class="text-right">
-                                                        <small>date: {{ p.published }}</small>
+                                                        <small>date: {{ feed.published }}</small>
                                                     </p>
                                                 </div>
                                             </div>

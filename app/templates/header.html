@@ -45,11 +45,7 @@
             {% else %}
                 {% include "login.html" ignore missing %}
             {% endif %}
-        <div class="pull-right">
-            {% if 'user_id' in session %}
-                <p>Hello, {{ name }}</p>
-            {% endif %}
-        </div>
+
         </div>
     </div>
 </div>
