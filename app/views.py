@@ -1,6 +1,6 @@
 from app import app, db
 from app.forms import LoginForm, RegistrationForm
-from app.login.models import User
+from app.login.models import User, Post
 from app.post_generator import logon
 from flask import render_template, request, url_for, redirect, session, flash, g
 from app.db_connect import DBConnect as DBc
@@ -10,7 +10,6 @@ from werkzeug.security import check_password_hash, generate_password_hash
 
 @app.before_request
 def before_request():
-    g.db = DBc.db_connect()
     g.config = DBc().con_config()
     g.user = None
     g.name = None
@@ -18,6 +17,8 @@ def before_request():
     if 'user_id' in session:
         g.user = User.query.get(session['user_id'])
         g.name = g.user.nickname
+
+        g.urls = Post.query.join(User.urls).filter(User.id == g.user.id).all()
 
     g.theme_list = []
     for root, dir_name, file_name in walk('./app/static/bootswatch'):
@@ -41,7 +42,7 @@ def index():
         feeds = logon(g.user.id)
         return render_template('index.html', feeds=feeds, theme_list=g.theme_list[0],
                                site_config=g.config, regform=g.regform, session=session, google_id=app.config
-                               ['GOOGLE_ID'], name=g.name)
+                               ['GOOGLE_ID'], name=g.name, urls=g.urls)
 
     # login part
     form = LoginForm(request.form)

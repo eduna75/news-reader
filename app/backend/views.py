@@ -50,21 +50,14 @@ def backend():
 
 @node.route('/news_config/', methods=['GET', 'POST'])
 def news_config():
-    urls = [dict(id=row[0], url=row[1], name=row[2]) for row in g.db.execute('SELECT * FROM url').fetchall()]
 
-    active = 'active in'
-    rss_active = 1
     error = None
     if request.method == 'POST':
-        if request.form['active'] is 'on2':
-            rss_active = 0
-        elif request.form['active'] is 'on1':
-            rss_active = 1
         try:
             if request.form['rssurl'] is None or '' and request.form['name'] is None or '':
                 error = "you didn't fill in all the fields: "
             else:
-                link = Post(request.form['rssurl'], request.form['name'])
+                link = Post(request.form['name'], request.form['rssurl'])
                 db.session.add(link)
                 db.session.commit()
 
