@@ -10,7 +10,7 @@ class User(db.Model):
     password = db.Column(db.String(120))
     role = db.Column(db.SmallInteger, default=USER.USER)
     status = db.Column(db.SmallInteger, default=USER.NEW)
-    urls = db.relationship('Post', secondary='urls', backref=db.backref('users', lazy='dynamic'))
+    urls = db.relationship('Feed', secondary='urls', backref=db.backref('users', lazy='dynamic'))
 
     def __init__(self, nickname, email, password=None):
         self.nickname = nickname
@@ -27,9 +27,22 @@ class User(db.Model):
         return '<User %r>' % self.nickname
 
     rel = db.Table('urls',
-                   db.Column('post_id', db.Integer, db.ForeignKey('post.id')),
+                   db.Column('feed_id', db.Integer, db.ForeignKey('feed.id')),
                    db.Column('user_id', db.Integer, db.ForeignKey('user.id'))
                    )
+
+
+class Feed(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String, unique=True)
+    url = db.Column(db.String, unique=True)
+
+    def __init__(self, name, url):
+        self.name = name
+        self.url = url
+
+    def __repr__(self):
+        return '<Feed %r %r>' % (self.name, self.url)
 
 
 class Post(db.Model):
@@ -69,22 +82,6 @@ class Country(db.Model):
 
     def __repr__(self):
         return '<Country %r>' % self.name
-
-
-class RSSFeed(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    url = db.Column(db.String, unique=True)
-    name = db.Column(db.String(120), unique=True)
-    country_id = db.Column(db.Integer, db.ForeignKey('country.id'))
-    language_id = db.Column(db.Integer, db.ForeignKey('language.id'))
-    category_id = db.Column(db.Integer, db.ForeignKey('category.id'))
-
-    def __init__(self, url, name,):
-        self.url = url
-        self.name = name
-
-    def __repr__(self):
-        return '<RSSFeed %r>' % self.name
 
 
 class Language(db.Model):

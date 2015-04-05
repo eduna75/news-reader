@@ -67,16 +67,13 @@
                                     </td>
 
                                 </tr>
-                                {% for url in urls %}
                                     <tr>
                                         <td>
-                                            <p><a href="{{ url.url }}">{{ url.name }}</a></p>
+                                            <p><a href="{{ feeds[0].link }}">{{ feeds[0].publisher }}</a></p>
                                         </td>
                                     </tr>
-                                {% endfor %}
                                 </tbody>
                             </table>
-                            {{ story }}
                         </div>
                         <div class="col-md-6 col-lg-6">
                             <div class="list-group">
@@ -85,21 +82,17 @@
                                         <div class="panel panel-default">
                                             <div class="list-group-item" href="#{{ feed.id }}">
                                                 <h4>{{ feed.title|safe }}</h4>
-                                                <small>{{ feed.time }}</small>
+                                                <small>{{ feed.publisher }}</small>
                                                 <br>
                                                 {{ feed.summary|safe }}<br>
                                                 <a href="{{ feed.link }}" target="_blank">Read further:</a>
 
-                                                <div class="row">
-                                                    <div class="col-sm-6">
-                                                        <small>source: {{ feed.publisher }}</small>
-                                                    </div>
-                                                    <div class="col-sm-6">
-                                                        <p class="text-right">
-                                                            <small>date: {{ feed.published }}</small>
-                                                        </p>
-                                                    </div>
-                                                </div>
+                                                <P>
+                                                    <small>source: {{ feed.publisher }}</small>
+                                                </P>
+                                                <P>
+                                                    <small>date: {{ feed.published }}</small>
+                                                </P>
                                             </div>
                                         </div>
                                     {% endfor %}

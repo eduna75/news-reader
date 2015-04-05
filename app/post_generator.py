@@ -1,4 +1,4 @@
-from app.login.models import Post, User
+from app.login.models import Feed, User
 import feedparser
 from app.db_connect import DBConnect as DBc
 
@@ -34,18 +34,18 @@ def fetch(urls):
     feed = []
     for links in urls:
         feeds = feedparser.parse(links.url)
-        for i in xrange(0, len(feeds['entries'])):
-            entries = {'title': feeds['entries'][i].title, 'summary': feeds['entries'][i].summary,
-                       'link': feeds['entries'][i].link, 'f_title': feeds['feed'].title,
-                       'published': feeds['entries'][i].published, 'publisher': links.name}
+        for i in xrange(0, len(feeds.entries)):
+            entries = {'title': feeds.entries[i].title, 'summary': feeds.entries[i].summary,
+                       'link': feeds.entries[i].link, 'published': feeds.entries[i].published,
+                       'publisher': feeds.feed.title}
             feed.append(entries)
 
     return feed
 
 
-def logon(id):
+def logon(user_id):
     urls = []
-    feeds = Post.query.join(User.urls).filter(User.id == id).all()
+    feeds = Feed.query.join(User.urls).filter(User.id == user_id).all()
     for feed in feeds:
         urls.append(feed)
     return fetch(urls)

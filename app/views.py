@@ -50,7 +50,6 @@ def index():
         user = User.query.filter_by(email=form.email.data).first()
         if user and check_password_hash(user.password, form.password.data):
             session['user_id'] = user.id
-            flash(u'Welcome %r' % user.nickname)
             return redirect(url_for('index'))
         flash(u'Wrong email or password')
     return render_template('index.html', theme_list=g.theme_list[0],
@@ -89,14 +88,14 @@ def register():
     regform = RegistrationForm(request.form)
     try:
         if regform.is_submitted() and regform.validate_on_submit():
-            user = User(name=regform.name.data, email=regform.email.data,
+            user = User(nickname=regform.name.data, email=regform.email.data,
                         password=generate_password_hash(regform.password.data))
             db.session.add(user)
             db.session.commit()
 
             session['user_id'] = user.id
 
-            return redirect(url_for('backend.run_post'))
+            return redirect(url_for('index'))
     except BaseException as e:
         print e
     else:

@@ -1,6 +1,6 @@
 from app import db
 from os import walk
-from app.login.models import User, Post
+from app.login.models import User, Feed
 from flask import Blueprint, render_template, g, request, redirect, url_for, flash, session
 from app.db_connect import DBConnect as DBc
 
@@ -32,16 +32,17 @@ def teardown_request(exception):
 @node.route('/logout/')
 def logout():
     session.pop('user_id', None)
-    flash('You are logged out!')
     return redirect(url_for('index'))
 
 
 @node.route('/')
 def backend():
-    urls = [dict(id=row[0], url=row[1], name=row[2]) for row in g.db.execute('SELECT * FROM url').fetchall()]
-    active = []
+    url = []
+    feeds = Feed.query.join(User.urls).filter(User.id == g.user.id).all()
+    for feed in feeds:
+        url.append(feed)
     error = None
-    return render_template('backend/config.html', theme_list=g.theme_list[0], urls=urls, error=error,
+    return render_template('backend/config.html', theme_list=g.theme_list[0], feeds=url, error=error,
                            site_config=g.config)
 
 
@@ -57,7 +58,7 @@ def news_config():
             if request.form['rssurl'] is None or '' and request.form['name'] is None or '':
                 error = "you didn't fill in all the fields: "
             else:
-                link = Post(request.form['name'], request.form['rssurl'])
+                link = Feed(request.form['name'], request.form['rssurl'])
                 db.session.add(link)
                 db.session.commit()
 
@@ -69,14 +70,20 @@ def news_config():
     return redirect(url_for('backend.backend'))
 
 
+def select_feed():
+    user = User.query.filter_by(id=g.user.id).first()
+    feed = Feed.query.filter_by(name=request.form['name']).first()
+    user.urls.append(feed)
+    db.session.commit()
+
+
 @node.route('/delete_feed/', methods=['GET', 'POST'])
 def delete_feed():
-    print request.form
     if request.method == 'POST':
-        print request.values
         if 'delete' in request.values:
-            g.db.execute('DELETE FROM url WHERE url_id=?', request.form.values())
-            g.db.commit()
+            print request.form.values()
+            i = request.form.values()
+
             flash('rss feed has been deleted')
             return redirect(url_for('backend.backend'))
     return redirect(url_for('backend.backend'))
