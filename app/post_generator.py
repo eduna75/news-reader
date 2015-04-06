@@ -46,6 +46,8 @@ def fetch(urls):
 def logon(user_id):
     urls = []
     feeds = Feed.query.join(User.urls).filter(User.id == user_id).all()
+    if not feeds:
+        feeds = Feed.query.filter_by(id=1).all()
     for feed in feeds:
         urls.append(feed)
     return fetch(urls)

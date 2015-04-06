@@ -81,8 +81,10 @@ def select_feed():
 def delete_feed():
     if request.method == 'POST':
         if 'delete' in request.values:
-            print request.form.values()
-            i = request.form.values()
+            user = User.query.filter_by(id=g.user.id).first()
+            feed = Feed.query.filter_by(id=request.form['delete']).first()
+            user.urls.remove(feed)
+            db.session.commit()
 
             flash('rss feed has been deleted')
             return redirect(url_for('backend.backend'))
