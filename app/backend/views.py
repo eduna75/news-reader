@@ -38,12 +38,13 @@ def logout():
 @node.route('/')
 def backend():
     url = []
+    all_feeds = Feed.query.all()
     feeds = Feed.query.join(User.urls).filter(User.id == g.user.id).all()
     for feed in feeds:
         url.append(feed)
     error = None
-    return render_template('backend/config.html', theme_list=g.theme_list[0], feeds=url, error=error,
-                           site_config=g.config)
+    return render_template('backend/config.html', theme_list=g.theme_list[0], feeds=url, all_feeds=all_feeds,
+                           error=error, site_config=g.config)
 
 
 """Form handlers"""
@@ -70,11 +71,13 @@ def news_config():
     return redirect(url_for('backend.backend'))
 
 
+@node.route('/select_feed/', methods=['GET', 'POST'])
 def select_feed():
-    user = User.query.filter_by(id=g.user.id).first()
-    feed = Feed.query.filter_by(name=request.form['name']).first()
-    user.urls.append(feed)
-    db.session.commit()
+    if request.method == 'POST':
+        feed = request.form['btn_feed']
+        print feed
+
+    return redirect(url_for('backend.backend'))
 
 
 @node.route('/delete_feed/', methods=['GET', 'POST'])
@@ -94,7 +97,6 @@ def delete_feed():
 @node.route('/set_template/', methods=['GET', 'POST'])
 def set_template():
     if request.method == 'POST':
-        print request.form['btn_theme']
         theme = request.form['btn_theme']
         g.db.execute('UPDATE config SET system_theme =?', (theme,))
         g.db.commit()

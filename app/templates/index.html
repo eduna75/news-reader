@@ -67,11 +67,11 @@
                                     </td>
 
                                 </tr>
-                                    <tr>
-                                        <td>
-                                            <p><a href="{{ feeds[0].link }}">{{ feeds[0].publisher }}</a></p>
-                                        </td>
-                                    </tr>
+                                <tr>
+                                    <td>
+                                        <p><a href="{{ feeds[0].link }}">{{ feeds[0].publisher }}</a></p>
+                                    </td>
+                                </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -91,7 +91,11 @@
                                                     <small>source: {{ feed.publisher }}</small>
                                                 </P>
                                                 <P>
-                                                    <small>date: {{ feed.published }}</small>
+                                                    <small>posted:</small>{% if feed.published_parsed >= 16 %}
+                                                    <small>{{ feed.published }}</small>
+                                                {% else %}
+                                                    <small>{{ feed.published_parsed }} hours ago</small>
+                                                {% endif %}
                                                 </P>
                                             </div>
                                         </div>

@@ -1,6 +1,7 @@
 from flask.ext.wtf import Form, RecaptchaField
-from wtforms import BooleanField, TextField, PasswordField
-from wtforms.validators import Required, Email, EqualTo, Length
+from wtforms import BooleanField, TextField, PasswordField, SelectField
+from wtforms.validators import Required, Email, EqualTo
+from app.login.models import Feed
 
 
 class LoginForm(Form):
