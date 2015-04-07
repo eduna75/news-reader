@@ -69,7 +69,9 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <p><a href="{{ feeds[0].link }}">{{ feeds[0].publisher }}</a></p>
+                                        {% for link in feed %}
+                                        <p><a href="#{{ link.name }}">{{ link.name }}</a> </p>
+                                        {% endfor %}
                                     </td>
                                 </tr>
                                 </tbody>

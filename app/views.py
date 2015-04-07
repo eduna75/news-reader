@@ -1,6 +1,6 @@
 from app import app, db
 from app.forms import LoginForm, RegistrationForm
-from app.login.models import User, Post
+from app.login.models import User, Post, Feed
 from app.post_generator import logon
 from flask import render_template, request, url_for, redirect, session, flash, g
 from app.db_connect import DBConnect as DBc
@@ -40,7 +40,8 @@ def index():
 
     if 'user_id' in session:
         feeds = logon(g.user.id)
-        return render_template('index.html', feeds=feeds, theme_list=g.theme_list[0],
+        feed = Feed.query.join(User.urls).filter(User.id == g.user.id).all()
+        return render_template('index.html', feeds=feeds, feed=feed, theme_list=g.theme_list[0],
                                site_config=g.config, regform=g.regform, session=session, google_id=app.config
                                ['GOOGLE_ID'], name=g.name, urls=g.urls)
 
