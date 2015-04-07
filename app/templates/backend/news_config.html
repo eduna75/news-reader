@@ -1,4 +1,4 @@
-<div class="well">
+<div class="well" xmlns="http://www.w3.org/1999/html">
     <h2>News Configuration</h2>
 </div>
 
@@ -14,13 +14,13 @@
 <div class="row">
     <div class="col-lg-5">
         <div>
-            <form method="post" action="select_feed/">
-                <select class="form-control">
+            <form name="feedForm" class="form-group" method="post" action="select_feed/">
+                <select multiple name="feeds" class="form-control">
                     {% for feed in all_feeds %}
-                        <option id="{{ feed.id }}">{{ feed.name }}</option>
+                    <option value="{{ feed.id }}">{{ feed.name }} : {{ feed.id }}</option>
                     {% endfor %}
                 </select>
-                <button type="submit" id="btn_feed" name="btn_feed" class="btn btn-default" value="">Submit</button>
+                <button class="btn btn-default" value="Select">Select</button>
             </form>
         </div>
 

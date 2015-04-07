@@ -74,8 +74,14 @@ def news_config():
 @node.route('/select_feed/', methods=['GET', 'POST'])
 def select_feed():
     if request.method == 'POST':
-        feed = request.form['btn_feed']
-        print feed
+        user = User.query.filter_by(id=g.user.id).first()
+        print request.form
+        for id in request.form.itervalues():
+            print id
+
+            feed = Feed.query.filter_by(id=id).first()
+            user.urls.append(feed)
+            db.session.commit()
 
     return redirect(url_for('backend.backend'))
 
