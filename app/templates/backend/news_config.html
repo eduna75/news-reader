@@ -12,20 +12,51 @@
 {% endfor %}
 
 <div class="row">
-    <div class="col-lg-5">
-        <div>
-            <form name="feedForm" class="form-group" method="post" action="select_feed/">
-                <div class="form-group">
-                    <select multiple name="feeds" class="form-control">
-                    {% for feed in all_feeds %}
-                    <option value="{{ feed.id }}">{{ feed.name }} : {{ feed.id }}</option>
-                    {% endfor %}
-                </select>
+    <div class="col-lg-6">
+        <div class="row">
+            <div class="col-lg-12">
+                <div>
+                    <form name="feedForm" class="form-group" method="post" action="select_feed/">
+                        <div class="form-group">
+                            <select multiple name="feeds" class="form-control">
+                                {% for feed in all_feeds %}
+                                    <option value="{{ feed.id }}">{{ feed.name }} : {{ feed.id }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-default" value="Select">Select</button>
+                        </div>
+                    </form>
                 </div>
-                <div class="form-group">
-                    <button class="btn btn-default" value="Select">Select</button>
-                </div>
-            </form>
+            </div>
+
+            <div class="col-lg-12">
+                    <form method="post" action="news_config/">
+                        <div class="form-group">
+                            <span class="glyphicon glyphicon-asterisk" style="color:red"></span>
+                            <label for="rssurl">insert a new rss feed</label>
+                            <input type="url" required="required" class="form-control" name="rssurl"
+                                   placeholder="rss feed" value="{{ request.form.rssurl }}">
+                        </div>
+                        <div class="form-group">
+                            <span class="glyphicon glyphicon-asterisk" style="color:red"></span>
+                            <label for="name">Name of rss feed</label>
+                            <input type="text" required="required" class="form-control" name="name"
+                                   placeholder="Name"
+                                   value="{{ request.form.name }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="edition">additional feed edition / category</label>
+                            <input type="text" class="form-control" name="edition" placeholder="Edition"
+                                   value="{{ request.form.edition }}">
+                        </div>
+                        <input type="radio" name="active" checked="checked" value="on1">Activate&nbsp;
+                        <input type="radio" name="active" value="on2">Deactivate
+                        <br>
+                        <button type="submit" name="btn1" class="btn btn-default">Submit</button>
+                    </form>
+            </div>
         </div>
 
         {% if error %}
@@ -33,7 +64,8 @@
         {% endif %}
     </div>
 
-    <div class="col-lg-7">
+
+    <div class="col-lg-6">
         {% for url in feeds %}
             <div class="panel panel-default">
                 <div class="panel-heading">
@@ -54,29 +86,4 @@
             </div>
         {% endfor %}
     </div>
-    <form method="post" action="news_config/">
-        <div class="form-group">
-            <span class="glyphicon glyphicon-asterisk" style="color:red"></span>
-            <label for="rssurl">insert a new rss feed</label>
-            <input type="url" required="required" class="form-control" name="rssurl"
-                   placeholder="rss feed" value="{{ request.form.rssurl }}">
-        </div>
-        <div class="form-group">
-            <span class="glyphicon glyphicon-asterisk" style="color:red"></span>
-            <label for="name">Name of rss feed</label>
-            <input type="text" required="required" class="form-control" name="name"
-                   placeholder="Name"
-                   value="{{ request.form.name }}">
-        </div>
-        <div class="form-group">
-            <label for="edition">additional feed edition / category</label>
-            <input type="text" class="form-control" name="edition" placeholder="Edition"
-                   value="{{ request.form.edition }}">
-        </div>
-        <input type="radio" name="active" checked="checked" value="on1">Activate&nbsp;
-        <input type="radio" name="active" value="on2">Deactivate
-        <br>
-        <button type="submit" name="btn1" class="btn btn-default">Submit</button>
-    </form>
-
 </div>
