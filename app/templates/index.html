@@ -70,7 +70,7 @@
                                 <tr>
                                     <td>
                                         {% for link in feed %}
-                                        <p><a href="#{{ link.name }}">{{ link.name }}</a> </p>
+                                        <p><a href="{{ url_for('news', news=link.name) }}">{{ link.name }}</a> </p>
                                         {% endfor %}
                                     </td>
                                 </tr>

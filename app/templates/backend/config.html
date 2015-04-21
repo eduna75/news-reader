@@ -8,15 +8,19 @@
         <div class="page-header">
             <ul class="nav nav-tabs">
                 <li class="active"><a aria-expanded="true" href="#News" data-toggle="tab">News</a></li>
+                {% if user.role == 0 %}
                 <li class=""><a aria-expanded="false" href="#site_config" data-toggle="tab">Site Config</a></li>
+                {% endif %}
             </ul>
             <div id="myTabContent" class="tab-content">
                 <div class="tab-pane fade active in" id="News">
                     {% include "backend/news_config.html" ignore missing %}
                 </div>
+                {% if user.role == 0 %}
                 <div class="tab-pane fade" id="site_config">
                     {% include "backend/site_config.html" ignore missing %}
                 </div>
+                {% endif %}
             </div>
         </div>
     </div>

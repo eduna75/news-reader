@@ -24,14 +24,10 @@ def fetch(urls):
     return feed
 
 
-def logon(user_id):
-    urls = []
-    feeds = Feed.query.join(User.urls).filter(User.id == user_id).all()
-    if not feeds:
-        feeds = Feed.query.filter_by(id=1).all()
-    for feed in feeds:
-        urls.append(feed)
-    return fetch(urls)
+def post(url=None):
+    if not url:
+        url = Feed.query.filter_by(id=1).all()
+    return fetch(url)
 
 
 if __name__ == "__main__":
