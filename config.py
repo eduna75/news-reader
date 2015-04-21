@@ -12,6 +12,7 @@ class BaseConfig(object):
     SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(_basedir, 'app.db')
     RECAPTCHA_PUBLIC_KEY = '6Le11d8SAAAAAD5bkXDOtLMIT-lcFVziPSZ3TR98'
     RECAPTCHA_PRIVATE_KEY = '6Le11d8SAAAAAMJDbjN4d0cjVaIUmY77IWQRZWKH'
+    PERMANENT_SESSION_LIFE = True
 
 
 class DevelopmentConfig(BaseConfig):

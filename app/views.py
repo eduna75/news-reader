@@ -20,6 +20,9 @@ def before_request():
 
         g.urls = Post.query.join(User.urls).filter(User.id == g.user.id).all()
 
+    if 'user_id' not in session:
+        g.form = LoginForm(request.form)
+
     g.theme_list = []
     for root, dir_name, file_name in walk('./app/static/bootswatch'):
         g.theme_list.append(dir_name)
@@ -46,15 +49,17 @@ def index():
                                ['GOOGLE_ID'], name=g.name, urls=g.urls)
 
     # login part
-    form = LoginForm(request.form)
-    if form.validate_on_submit():
-        user = User.query.filter_by(email=form.email.data).first()
-        if user and check_password_hash(user.password, form.password.data):
+
+    if g.form.validate_on_submit():
+        user = User.query.filter_by(email=g.form.email.data).first()
+        if g.form['logged_in'].data is True:
+            session.permanent = True
+        if user and check_password_hash(user.password, g.form.password.data):
             session['user_id'] = user.id
             return redirect(url_for('index'))
         flash(u'Wrong email or password')
     return render_template('index.html', theme_list=g.theme_list[0],
-                           site_config=g.config, form=form, regform=g.regform, session=session, google_id=app.config[
+                           site_config=g.config, form=g.form, regform=g.regform, session=session, google_id=app.config[
                            'GOOGLE_ID'], name=g.name)
 
 
@@ -66,22 +71,26 @@ def help_page():
 
 @app.errorhandler(404)
 def page_not_found(e):
-    return render_template('404.html', theme_list=g.theme_list[0], site_config=g.config, e=e), 404
+    return render_template('404.html', theme_list=g.theme_list[0], site_config=g.config, e=e, form=g.form,
+                           regform=g.regform), 404
 
 
 @app.errorhandler(400)
 def page_not_found(e):
-    return render_template('404.html', theme_list=g.theme_list[0], site_config=g.config, e=e), 400
+    return render_template('404.html', theme_list=g.theme_list[0], site_config=g.config, e=e, form=g.form,
+                           regform=g.regform), 400
 
 
 @app.errorhandler(401)
 def page_not_found(e):
-    return render_template('404.html', theme_list=g.theme_list[0], site_config=g.config, e=e), 401
+    return render_template('404.html', theme_list=g.theme_list[0], site_config=g.config, e=e, form=g.form,
+                           regform=g.regform), 401
 
 
 @app.errorhandler(405)
 def page_not_found(e):
-    return render_template('404.html', theme_list=g.theme_list[0], site_config=g.config, e=e), 405
+    return render_template('404.html', theme_list=g.theme_list[0], site_config=g.config, e=e, form=g.form,
+                           regform=g.regform), 405
 
 
 @app.route('/register', methods=['GET', 'POST'])
