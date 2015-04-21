@@ -22,26 +22,7 @@
                     </div>
                 </div>
             {% endif %}
-            {% if 'user_id' in session %}
-            {% else %}
-                <div class="well">
-                    <div class="row">
-                        <div class="col-sm-6">
-                            {% for config in site_config %}
-                                <h1>{{ config.title }}
-                                    <small><br>
-                                        {{ config.slogan }}
-                                    </small>
-                                </h1>
-                            {% endfor %}
-                        </div>
 
-                        <div class="col-sm-6">
-
-                        </div>
-                    </div>
-                </div>
-            {% endif %}
 
             <div class="navbar navbar-default fixed">
                 <div class="container">

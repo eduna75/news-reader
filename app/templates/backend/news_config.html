@@ -15,12 +15,16 @@
     <div class="col-lg-5">
         <div>
             <form name="feedForm" class="form-group" method="post" action="select_feed/">
-                <select multiple name="feeds" class="form-control">
+                <div class="form-group">
+                    <select multiple name="feeds" class="form-control">
                     {% for feed in all_feeds %}
                     <option value="{{ feed.id }}">{{ feed.name }} : {{ feed.id }}</option>
                     {% endfor %}
                 </select>
-                <button class="btn btn-default" value="Select">Select</button>
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-default" value="Select">Select</button>
+                </div>
             </form>
         </div>
 
