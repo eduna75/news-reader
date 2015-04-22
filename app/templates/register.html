@@ -13,21 +13,21 @@
 
                         <div class="well">
                             <form class="" role="form" method="POST" action="register">
-                                {{ regform.csrf_token }}
+                                {{ g.regform.csrf_token }}
                                 <div class="form-group">
-                                    {{ regform.name.label }} : {{ regform.name(class="form-control") }}
+                                    {{ g.regform.name.label }} : {{ g.regform.name(class="form-control") }}
                                 </div>
                                 <div class="form-group">
-                                    {{ regform.email.label }} : {{ regform.email(class="form-control") }}
+                                    {{ g.regform.email.label }} : {{ g.regform.email(class="form-control") }}
                                 </div>
                                 <div class="form-group">
-                                    {{ regform.password.label }} : {{ regform.password(class="form-control") }}
+                                    {{ g.regform.password.label }} : {{ g.regform.password(class="form-control") }}
                                 </div>
                                 <div class="form-group">
-                                    {{ regform.confirm.label }} : {{ regform.confirm(class="form-control") }}
+                                    {{ g.regform.confirm.label }} : {{ g.regform.confirm(class="form-control") }}
                                 </div>
                                 <div class="form-group">
-                                    {{ regform.accept_tos.label }} : {{ regform.accept_tos }}
+                                    {{ g.regform.accept_tos.label }} : {{ g.regform.accept_tos }}
                                 </div>
                                 <div class="form-group">
                                     <input type="submit" class="btn btn-success" value="submit"

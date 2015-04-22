@@ -17,10 +17,10 @@
                 {{ message }}
             {% endfor %}
             </div>
-                {{ form.csrf_token }}
-                <div class="form-group"><div>{{ form.email.label }}: {{ form.email(class="form-control") }}</div></div>
-                <div class="form-group"><div>{{ form.password.label }}: {{ form.password(class="form-control") }}</div></div>
-                <div class="form-group"><div>{{ form.logged_in.label }}: {{ form.logged_in }}</div></div>
+                {{ g.form.csrf_token }}
+                <div class="form-group"><div>{{ g.form.email.label }}: {{ g.form.email(class="form-control") }}</div></div>
+                <div class="form-group"><div>{{ g.form.password.label }}: {{ g.form.password(class="form-control") }}</div></div>
+                <div class="form-group"><div>{{ g.form.logged_in.label }}: {{ g.form.logged_in }}</div></div>
                         <input type="submit" class="btn btn-success" value="submit" placeholder="submit">
             </form>
                 </div>

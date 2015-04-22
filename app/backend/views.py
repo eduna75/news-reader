@@ -43,8 +43,7 @@ def backend():
     for feed in feeds:
         url.append(feed)
     error = None
-    return render_template('backend/config.html', theme_list=g.theme_list[0], feeds=url, all_feeds=all_feeds,
-                           error=error, site_config=g.config, user=g.user)
+    return render_template('backend/config.html', feeds=url, all_feeds=all_feeds, error=error, user=g.user)
 
 
 """Form handlers"""

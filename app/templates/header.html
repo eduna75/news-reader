@@ -1,7 +1,7 @@
 <div class="navbar navbar-default navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
-            {% for config in site_config %}
+            {% for config in g.config %}
                 <a href="/" class="navbar-brand">{{ config.title }}</a>
             {% endfor %}
             <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
@@ -17,22 +17,19 @@
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="themes">Themes <span
                                 class="caret"></span></a>
                         <ul id="theme_list" class="dropdown-menu" aria-labelledby="themes">
-                            {% for theme in theme_list %}
+                            {% for theme in g.theme_list[0] %}
                                 <li id="{{ theme }}"><a href="#">{{ theme }}</a></li>
                             {% endfor %}
                         </ul>
                     </li>
                 {% endif %}
-                <li>
-                    <a href="help">Help</a>
-                </li>
 
                 {% if "user_id" in session %}
                     <li>
-                        <a href="backend">Config</a>
+                        <a href="{{ url_for('backend.backend') }}">Config</a>
                     </li>
                     <li>
-                        <a href="backend/logout">Logout</a>
+                        <a href="{{ url_for('backend.logout') }}">Logout</a>
                     </li>
 
                 {% else %}
