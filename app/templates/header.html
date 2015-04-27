@@ -13,13 +13,15 @@
             </button>
         </div>
 
+        {% if 'user_id' in session %}
+            <div class="navbar-collapse collapse" id="">
+                <ul class="nav navbar-nav">
+                    <li><a href="{{ url_for('backend.backend') }}">Config</a></li>
+                    <li><a href="{{ url_for('backend.logout') }}">Logout</a></li>
+                </ul>
+            </div>
+        {% endif %}
 
-        <div class="navbar-collapse collapse" id="">
-            <ul class="nav navbar-nav">
-                <li><a href="{{ url_for('backend.backend') }}">Config</a></li>
-                <li><a href="{{ url_for('backend.logout') }}">Logout</a></li>
-            </ul>
-        </div>
     </div>
 </div>
 
