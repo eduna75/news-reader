@@ -58,6 +58,12 @@ def index():
     return render_template('index.html', session=session)
 
 
+@app.route('/login')
+def login():
+
+    return render_template("login.html")
+
+
 @app.route('/news/<news>')
 def news(news=None):
 
@@ -101,6 +107,8 @@ def register():
             return redirect(url_for('index'))
     except BaseException as e:
         print e
+        flash('This email address is already registered, please login or use another email address')
+        return redirect(url_for('index'))
     else:
         flash(regform.errors)
         return redirect(url_for('index'))

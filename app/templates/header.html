@@ -1,48 +1,40 @@
 <div class="navbar navbar-default navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
+
             {% for config in g.config %}
                 <a href="/" class="navbar-brand">{{ config.title }}</a>
             {% endfor %}
-            <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+
+            <button class="navbar-toggle" type="button" data-toggle="offcanvas" data-target="#navbar-main">
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
         </div>
-        <div class="navbar-collapse collapse" id="navbar-main">
-            <ul class="nav navbar-nav">
-                {% if 'user_id' in session %}
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="themes">Themes <span
-                                class="caret"></span></a>
-                        <ul id="theme_list" class="dropdown-menu" aria-labelledby="themes">
-                            {% for theme in g.theme_list[0] %}
-                                <li id="{{ theme }}"><a href="#">{{ theme }}</a></li>
-                            {% endfor %}
-                        </ul>
-                    </li>
-                {% endif %}
+
+        <div class="navmenu navmenu-default navmenu-fixed-left offcanvas" id="navbar-main">
+            <ul class="nav navbar-nav pull-right" role="menu">
 
                 {% if "user_id" in session %}
-                    <li>
-                        <a href="{{ url_for('backend.backend') }}">Config</a>
-                    </li>
-                    <li>
-                        <a href="{{ url_for('backend.logout') }}">Logout</a>
+
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Options <b class="caret"></b></a>
+                        <ul class="dropdown-menu navmenu-nav" role="menu">
+                            <li class="divider"></li>
+                            <li><a href="{{ url_for('backend.backend') }}">Config</a></li>
+                            <li><a href="{{ url_for('backend.logout') }}">Logout</a></li>
+                        </ul>
                     </li>
 
-                {% else %}
-                    <li>
-                        <a href="#" data-toggle="modal" data-target="#myModal">Login</a>
-                    </li>
+
+                    {% for link in feed %}
+                        <li>
+                            <a href="{{ url_for('news', news=link.name) }}">{{ link.name }}</a>
+                        </li>
+                    {% endfor %}
                 {% endif %}
             </ul>
-            {% if 'user_id' in session %}
-            {% else %}
-                {% include "login.html" ignore missing %}
-            {% endif %}
-
         </div>
     </div>
 </div>

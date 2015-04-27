@@ -10,8 +10,8 @@ class BaseConfig(object):
     SECRET_KEY = 'N\xb3\x95\xcf\xc3\xd0\x8c2\x8a\xa73\xbc\x1c\xc8\xcd3&\xb6\xdf\xfa\xd1\xd0\x1d\xcc'
     GOOGLE_ID = 'UA-39697368-1'
     SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(_basedir, 'app.db')
-    RECAPTCHA_PUBLIC_KEY = '6Le11d8SAAAAAD5bkXDOtLMIT-lcFVziPSZ3TR98'
-    RECAPTCHA_PRIVATE_KEY = '6Le11d8SAAAAAMJDbjN4d0cjVaIUmY77IWQRZWKH'
+    RECAPTCHA_PUBLIC_KEY = '6Lf29gUTAAAAAPO9uqkFVMB1bfdypl3pSt6DzAz8'
+    RECAPTCHA_PRIVATE_KEY = '6Lf29gUTAAAAAFmwUgXO3an8J8BNyj9woPH-nLXf'
     PERMANENT_SESSION_LIFE = True
 
 

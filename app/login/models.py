@@ -86,7 +86,9 @@ class Country(db.Model):
 
 class Language(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(120), unique=True)
+    title = db.Column(db.String(120), unique=True)
+    english = db.Column(db.String(120), unique=True)
+    language = db.Column(db.String(8), unique=True)
 
     def __init__(self, name):
         self.name = name
