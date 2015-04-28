@@ -92,6 +92,11 @@ def page_not_found(e):
     return render_template('404.html', e=e), 405
 
 
+@app.errorhandler(500)
+def page_not_found(e):
+    return render_template('404.html', e=e), 500
+
+
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     regform = RegistrationForm(request.form)

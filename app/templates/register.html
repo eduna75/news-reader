@@ -11,8 +11,7 @@
                     <div class="col-sm-12 login">
                         <h4>Register</h4>
 
-                        <div class="well">
-                            <form class="" role="form" method="POST" action="register">
+                        <form class="" role="form" method="POST" action="register">
                                 {{ g.regform.csrf_token }}
                                 <div class="form-group">
                                     {{ g.regform.name.label }} : {{ g.regform.name(class="form-control") }}
@@ -31,11 +30,9 @@
                                 </div>
                                 {{ g.regform.captcha.label }} : {{ g.regform.captcha }}
                                 <div class="form-group">
-                                    <input type="submit" class="btn btn-success" value="submit"
-                                           placeholder="submit">
+                                    <input type="submit" class="btn btn-primary" value="submit" placeholder="submit">
                                 </div>
                             </form>
-                        </div>
                         <div class="col-sm-4">
 
                         </div>
