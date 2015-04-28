@@ -21,7 +21,15 @@
                                 </div>
                             </div>
 
-                            <div class="panel-body">{{ feed.summary|safe }}<br>
+                            <div class="panel-body">
+                                {% if feed.image == None %}
+
+                                    {% else %}
+                                    <a href="{{ feed.link }}" target="_blank" class="thumbnail">
+                                    <img alt="Image" src="{{ feed.image }}" style="height:100%;">
+                                </a>
+                                {% endif %}
+                                {{ feed.summary|safe }}<br>
                                 <a href="{{ feed.link }}" target="_blank">Read more</a>
                             </div>
 

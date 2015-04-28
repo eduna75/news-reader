@@ -1,7 +1,7 @@
 import time
-from app.login.models import Feed, User
+from app.login.models import Feed
 import feedparser
-from app.db_connect import DBConnect as DBc
+import re
 
 
 def time_ago(data):
@@ -16,9 +16,22 @@ def fetch(urls):
     for links in urls[0:2]:
         feeds = feedparser.parse(links.url)
         for i in xrange(0, len(feeds.entries)):
+            image = None
+            value = str(feeds.entries[i].links)
+            try:
+                image_url = re.search('(?P<url>http?://[^\s]+(png|jpeg|jpg))', value).group("url")
+                if 'NoneType' in image_url:
+                    image = None
+                else:
+                    image = image_url
+            except BaseException as e:
+                print e
+            print image
+
             entries = {'title': feeds.entries[i].title, 'summary': feeds.entries[i].summary,
                        'link': feeds.entries[i].link, 'published': feeds.entries[i].published,
-                       'publisher': feeds.feed.title, 'published_parsed': time_ago(feeds.entries[i].published_parsed)}
+                       'publisher': feeds.feed.title, 'published_parsed': time_ago(feeds.entries[i].published_parsed),
+                       'image': image}
             feed.append(entries)
 
     return feed
