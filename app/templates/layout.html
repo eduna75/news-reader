@@ -24,10 +24,11 @@
                             <div class="panel-body">
                                 {% if feed.image == None %}
 
-                                    {% else %}
+                                {% else %}
                                     <a href="{{ feed.link }}" target="_blank" class="img-responsive">
-                                    <img alt="Image" src="{{ feed.image }}" class="img-thumbnail">
-                                </a>
+                                        <img alt="Image" src="{{ feed.image }}" class="img-thumbnail">
+                                    </a>
+                                    <hr>
                                 {% endif %}
                                 {{ feed.summary|safe }}<br>
                                 <a href="{{ feed.link }}" target="_blank">Read more</a>
