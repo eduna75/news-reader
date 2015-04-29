@@ -43,6 +43,7 @@ def backend():
     for feed in feeds:
         url.append(feed)
     error = None
+    print url, all_feeds
     return render_template('backend/config.html', feeds=url, all_feeds=all_feeds, error=error, user=g.user)
 
 
