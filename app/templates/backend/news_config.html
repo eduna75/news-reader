@@ -18,15 +18,12 @@
                 <div>
                     <form name="feedForm" class="form-group" method="post" action="select_feed/">
                         <div class="form-group">
-                            <select multiple name="feeds" class="form-control">
-                                {% for feed in all_feeds %}
-                                    <option value="{{ feed.id }}">{{ feed.name }} : {{ feed.id }}</option>
+                            {% for feed in all_feeds %}
+                                    <button class="btn btn-default" style="border: 1px solid #ffffff; width: 100%;
+                                    " value="{{ feed.id }}" name="{{ feed.id }}">{{ feed.name }}</button>
                                 {% endfor %}
-                            </select>
                         </div>
-                        <div class="form-group">
-                            <button class="btn btn-default" value="Select">Select</button>
-                        </div>
+
                     </form>
                 </div>
             </div>
@@ -69,23 +66,18 @@
 
     <div class="col-lg-6">
         {% for url in feeds %}
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <div class="row">
-                        <div class="col-md-2">
+            <div class="row">
+                        <div class="col-md-12">
                             <form method="post" action="delete_feed/">
-                                <button type="submit" class="btn btn-default" name="delete" id="delete"
+                                <button type="submit" class="btn btn-primary" style="width: 100%;
+                                border: 1px solid #ffffff;" name="delete" id="delete"
                                         value="{{ url.id }}">
-                                    Delete
+                                    {{ url.name }}
                                 </button>
                             </form>
                         </div>
-                        <div class="col-md-10">
-                            <p>{{ url.name }} <a href="{{ url.url }}" target="_blank"> {{ url.url|wordwrap }}</a></p>
-                        </div>
+
                     </div>
-                </div>
-            </div>
         {% endfor %}
     </div>
 </div>

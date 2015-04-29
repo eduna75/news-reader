@@ -14,7 +14,7 @@
         </div>
 
         {% if 'user_id' in session %}
-            <div class="navbar-collapse collapse" id="">
+            <div class="navbar-collapse collapse pull-right" id="navbar-secundary">
                 <ul class="nav navbar-nav">
                     <li><a href="{{ url_for('backend.backend') }}">Config</a></li>
                     <li><a href="{{ url_for('backend.logout') }}">Logout</a></li>

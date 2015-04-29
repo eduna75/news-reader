@@ -74,13 +74,13 @@ def news_config():
 def select_feed():
     if request.method == 'POST':
         user = User.query.filter_by(id=g.user.id).first()
-        print request.form
         for id in request.form.itervalues():
-            print id
 
             feed = Feed.query.filter_by(id=id).first()
             user.urls.append(feed)
             db.session.commit()
+
+            flash('RSS feed [ %s ] has been added to your list.' % feed.name)
 
     return redirect(url_for('backend.backend'))
 
@@ -88,6 +88,7 @@ def select_feed():
 @node.route('/delete_feed/', methods=['GET', 'POST'])
 def delete_feed():
     if request.method == 'POST':
+        print request
         if 'delete' in request.values:
             user = User.query.filter_by(id=g.user.id).first()
             feed = Feed.query.filter_by(id=request.form['delete']).first()
