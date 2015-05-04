@@ -2,7 +2,7 @@ from app import app, db
 from app.forms import LoginForm, RegistrationForm
 from app.login.models import User, Feed
 from app.post_generator import post
-from flask import render_template, request, url_for, redirect, session, flash, g
+from flask import render_template, request, url_for, redirect, session, flash, g, send_from_directory
 from app.db_connect import DBConnect as DBc
 from os import walk
 from werkzeug.security import check_password_hash, generate_password_hash
@@ -95,6 +95,12 @@ def page_not_found(e):
 @app.errorhandler(500)
 def page_not_found(e):
     return render_template('404.html', e=e), 500
+
+
+@app.route('/robots.txt')
+@app.route('/sitemap.xml')
+def robots_txt():
+    return send_from_directory(app.static_folder, request.path[1:])
 
 
 @app.route('/register', methods=['GET', 'POST'])
