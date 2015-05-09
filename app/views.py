@@ -65,8 +65,8 @@ def news(news=None):
         Feed.name == news).all())  # These are the news posts
 
     for i in [i for i, x in enumerate(g.feed) if x.name == news]:
-        pass
-
+        if i + 1 >= len(g.feed):
+            i = -1
     return render_template('index.html', feeds=feeds, feed=g.feed, session=session, news=g.feed[i + 1].name,
                            heading=news)
 
