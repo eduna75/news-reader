@@ -13,7 +13,7 @@ def time_ago(data):
 
 def fetch(urls):
     feed = []
-    for links in urls[0:2]:
+    for links in urls[0:1]:
         feeds = feedparser.parse(links.url)
         for i in xrange(0, len(feeds.entries)):
             image = None

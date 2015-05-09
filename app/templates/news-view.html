@@ -1,0 +1,43 @@
+<div id="postlist" class="panel panel-default">
+    <div class="panel-heading">{{ heading }}</div>
+
+    {% for feed in feeds %}
+        <div class="panel">
+            <div class="row">
+                <div class="col-sm-9">
+                    <div class="panel-heading">
+                        <h3 class="pull-left">{{ feed.title|safe }}</h3>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <h4 class="pull-right">
+                        <small><em>{{ feed.published_parsed }} hours ago</em></small>
+                    </h4>
+                </div>
+            </div>
+
+            <div class="panel-body">
+                {% if feed.image == None %}
+
+                {% else %}
+                    <a href="{{ feed.link }}" target="_blank" class="img-responsive">
+                        <img alt="Image" src="{{ feed.image }}" class="img-thumbnail">
+                    </a>
+                    <hr>
+                {% endif %}
+                {{ feed.summary|safe }}<br>
+                <a href="{{ feed.link }}" target="_blank">Read more</a>
+            </div>
+
+            <div class="panel-footer">
+                <span class="label label-default">{{ feed.publisher }}</span> <span
+                    class="label label-default">Updates</span> <span
+                    class="label label-default">{{ feed.published }}</span>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+<div class="text-center">
+    <a href="{{ url_for('news', news=news) }}" id="loadmore" class="btn btn-primary">Next posts...</a>
+</div>

@@ -18,6 +18,7 @@ def before_request():
     if 'user_id' in session:
         g.user = User.query.get(session['user_id'])
         g.name = g.user.nickname
+        g.feed = Feed.query.join(User.urls).filter(User.id == g.user.id).all()
 
     if 'user_id' not in session:
         g.form = LoginForm(request.form)
@@ -41,9 +42,8 @@ def teardown_request(exception):
 def index():
 
     if 'user_id' in session:
-        feeds = post(Feed.query.join(User.urls).filter(User.id == g.user.id).all())
-        feed = Feed.query.join(User.urls).filter(User.id == g.user.id).all()
-        return render_template('index.html', feeds=feeds, feed=feed, session=session)
+
+        return redirect(url_for('news', news=g.feed[0].name))
 
     # login part
 
@@ -58,18 +58,45 @@ def index():
     return render_template('index.html', session=session)
 
 
-@app.route('/login')
-def login():
-
-    return render_template("login.html")
-
-
 @app.route('/news/<news>')
 def news(news=None):
 
-    feeds = post(Feed.query.join(User.urls).filter(User.id == g.user.id).filter(Feed.name == news).all())
-    feed = Feed.query.join(User.urls).filter(User.id == g.user.id).all()
-    return render_template('index.html', feeds=feeds, feed=feed, session=session, news=news)
+    feeds = post(Feed.query.join(User.urls).filter(User.id == g.user.id).filter(
+        Feed.name == news).all())  # These are the news posts
+
+    for i in [i for i, x in enumerate(g.feed) if x.name == news]:
+        pass
+
+    return render_template('index.html', feeds=feeds, feed=g.feed, session=session, news=g.feed[i + 1].name,
+                           heading=news)
+
+
+@app.route('/login')
+def login():
+    return render_template("login.html")
+
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    regform = RegistrationForm(request.form)
+    try:
+        if regform.is_submitted() and regform.validate_on_submit():
+            user = User(nickname=regform.name.data, email=regform.email.data,
+                        password=generate_password_hash(regform.password.data))
+            db.session.add(user)
+            db.session.commit()
+
+            session['user_id'] = user.id
+
+            return redirect(url_for('index'))
+    except BaseException as e:
+        print e
+        flash('This email address is already registered, please login or use another email address')
+        return redirect(url_for('index'))
+    else:
+        flash(regform.errors)
+        return redirect(url_for('index'))
+    return render_template('register.html')
 
 
 @app.errorhandler(404)
@@ -101,26 +128,3 @@ def page_not_found(e):
 @app.route('/sitemap.xml')
 def robots_txt():
     return send_from_directory(app.static_folder, request.path[1:])
-
-
-@app.route('/register', methods=['GET', 'POST'])
-def register():
-    regform = RegistrationForm(request.form)
-    try:
-        if regform.is_submitted() and regform.validate_on_submit():
-            user = User(nickname=regform.name.data, email=regform.email.data,
-                        password=generate_password_hash(regform.password.data))
-            db.session.add(user)
-            db.session.commit()
-
-            session['user_id'] = user.id
-
-            return redirect(url_for('index'))
-    except BaseException as e:
-        print e
-        flash('This email address is already registered, please login or use another email address')
-        return redirect(url_for('index'))
-    else:
-        flash(regform.errors)
-        return redirect(url_for('index'))
-    return render_template('register.html')
