@@ -1,18 +1,20 @@
 <div id="postlist" class="panel panel-default">
-    <div class="panel-heading">{{ heading }}</div>
+    <div class="panel-heading">{{ feeds[0].publisher }}</div>
 
     {% for feed in feeds %}
         <div class="panel">
             <div class="row">
                 <div class="col-sm-9">
                     <div class="panel-heading">
+                        <h4>
+                            {% if feed.published_parsed == 0 %}
+                                <small><em>Just now</em></small>
+                            {% else %}
+                                <small><em>{{ feed.published_parsed }} hours ago</em></small>
+                            {% endif %}
+                        </h4>
                         <h3 class="pull-left">{{ feed.title|safe }}</h3>
                     </div>
-                </div>
-                <div class="col-sm-3">
-                    <h4 class="pull-right">
-                        <small><em>{{ feed.published_parsed }} hours ago</em></small>
-                    </h4>
                 </div>
             </div>
 
@@ -21,7 +23,7 @@
 
                 {% else %}
                     <a href="{{ feed.link }}" target="_blank" class="img-responsive">
-                        <img alt="Image" src="{{ feed.image }}" class="img-thumbnail">
+                        <img alt="Image" src="{{ feed.image }}" class="img-thumbnail" style="width: 100%;">
                     </a>
                     <hr>
                 {% endif %}
@@ -30,7 +32,7 @@
             </div>
 
             <div class="panel-footer">
-                <span class="label label-default">{{ feed.publisher }}</span> <span
+                <span class="label label-default">{{ feed.publisher|truncate(30) }}</span> <span
                     class="label label-default">Updates</span> <span
                     class="label label-default">{{ feed.published }}</span>
             </div>
@@ -39,5 +41,7 @@
 </div>
 
 <div class="text-center">
-    <a href="{{ url_for('news', news=news) }}" id="loadmore" class="btn btn-primary">Next posts...</a>
+    <a href="{{ url_for('news', news=news) }}" id="loadmore" class="btn btn-primary">Next posts...<br>
+        <small>{{ news|truncate(20) }}</small>
+    </a>
 </div>
