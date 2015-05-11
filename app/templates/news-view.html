@@ -9,11 +9,13 @@
                         <h4>
                             {% if feed.published_parsed == 0 %}
                                 <small><em>Just now</em></small>
-                            {% else %}
+                            {% elif feed.published_parsed <= 24 %}
                                 <small><em>{{ feed.published_parsed }} hours ago</em></small>
+                            {% else %}
+                                <small><em>{{ feed.published }}</em></small>
                             {% endif %}
                         </h4>
-                        <h3 class="pull-left">{{ feed.title|safe }}</h3>
+                        <h3>{{ feed.title|safe }}</h3>
                     </div>
                 </div>
             </div>
@@ -25,16 +27,16 @@
                     <a href="{{ feed.link }}" target="_blank" class="img-responsive">
                         <img alt="Image" src="{{ feed.image }}" class="img-thumbnail center-block" style="width: 350px; height: 75%; object-fit: contain;">
                     </a>
-                    <hr>
                 {% endif %}
-                {{ feed.summary|safe }}<br>
-                <a href="{{ feed.link }}" target="_blank">Read more</a>
+                <p>{{ feed.summary|striptags }}</p>
+
+                <p><a href="{{ feed.link }}" target="_blank">Read more</a></p>
             </div>
 
             <div class="panel-footer">
                 <span class="label label-default">{{ feed.publisher|truncate(30) }}</span> <span
                     class="label label-default">Updates</span> <span
-                    class="label label-default">{{ feed.published }}</span>
+                    class="label label-default">{{ feed.published|datetimeformat }}</span>
             </div>
         </div>
     {% endfor %}

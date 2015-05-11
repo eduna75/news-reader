@@ -1,3 +1,4 @@
+from dateutil import parser
 from app import app, db
 from app.forms import LoginForm, RegistrationForm
 from app.login.models import User, Feed
@@ -6,6 +7,14 @@ from flask import render_template, request, url_for, redirect, session, flash, g
 from app.db_connect import DBConnect as DBc
 from os import walk
 from werkzeug.security import check_password_hash, generate_password_hash
+
+
+def datetimeformat(value):
+    value = parser.parse(value)
+    return value.strftime('%A, %d %B %Y')
+
+
+app.jinja_env.filters['datetimeformat'] = datetimeformat
 
 
 @app.before_request

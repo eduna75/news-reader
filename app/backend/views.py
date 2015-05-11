@@ -43,7 +43,6 @@ def backend():
     for feed in feeds:
         url.append(feed)
     error = None
-    print url, all_feeds
     return render_template('backend/config.html', feeds=url, all_feeds=all_feeds, error=error, user=g.user)
 
 
@@ -89,7 +88,6 @@ def select_feed():
 @node.route('/delete_feed/', methods=['GET', 'POST'])
 def delete_feed():
     if request.method == 'POST':
-        print request
         if 'delete' in request.values:
             user = User.query.filter_by(id=g.user.id).first()
             feed = Feed.query.filter_by(id=request.form['delete']).first()

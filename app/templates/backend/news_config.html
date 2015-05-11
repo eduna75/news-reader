@@ -33,6 +33,7 @@
 
             {% if user.role == 0 %}
                 <div class="col-lg-12">
+                <span class="align-center"><h3>available news feeds.</h3></span>
                     <form method="post" action="news_config/">
                         <div class="form-group">
                             <span class="glyphicon glyphicon-asterisk" style="color:red"></span>
@@ -68,6 +69,7 @@
 
 
     <div class="col-lg-6">
+    <span class="align-center"><h3>Your subcribed news feeds</h3></span>
         {% for url in feeds %}
             <div class="row">
                 <div class="col-md-12">
