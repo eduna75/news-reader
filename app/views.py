@@ -8,6 +8,12 @@ from app.db_connect import DBConnect as DBc
 from os import walk
 from werkzeug.security import check_password_hash, generate_password_hash
 
+########################################
+#
+# datetimeformat is a filter for jinja2
+#
+#######################################
+
 
 def datetimeformat(value):
     value = parser.parse(value)
@@ -49,9 +55,7 @@ def teardown_request(exception):
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-
     if 'user_id' in session:
-
         return redirect(url_for('news', news=g.feed[0].name))
 
     # login part
@@ -69,7 +73,6 @@ def index():
 
 @app.route('/news/<news>')
 def news(news=None):
-
     feeds = post(Feed.query.join(User.urls).filter(User.id == g.user.id).filter(
         Feed.name == news).all())  # These are the news posts
 
