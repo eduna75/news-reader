@@ -55,8 +55,14 @@ def teardown_request(exception):
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
+    # if user not logged in login page will be presented, after login the first feed in the list is shown
     if 'user_id' in session:
-        return redirect(url_for('news', news=g.feed[0].name))
+        if not g.feed:  # if user has no feeds the first item from the database will be shown as news.
+            news = Feed.query.filter_by(id=1).first().name
+            flash("You don't have any feeds yet!")
+        else:
+            news = g.feed[0].name
+        return redirect(url_for('news', news=news))
 
     # login part
 
@@ -76,11 +82,15 @@ def news(news=None):
     feeds = post(Feed.query.join(User.urls).filter(User.id == g.user.id).filter(
         Feed.name == news).all())  # These are the news posts
 
+    # next part is for the bottom "more feeds" link. it get the next one and at the end returns to the first feed.
     for i in [i for i, x in enumerate(g.feed) if x.name == news]:
         if i + 1 >= len(g.feed):
             i = -1
-    return render_template('index.html', feeds=feeds, feed=g.feed, session=session, news=g.feed[i + 1].name,
-                           heading=news)
+    if not g.feed:
+        next_news = Feed.query.filter_by(id=1).all()
+    else:
+        next_news = g.feed[i + 1].name
+    return render_template('index.html', feeds=feeds, feed=g.feed, session=session, news=next_news, heading=news)
 
 
 @app.route('/login')

@@ -1,4 +1,4 @@
-<div class="well" xmlns="http://www.w3.org/1999/html">
+<div class="well">
     <h2>News Configuration</h2>
 </div>
 
@@ -16,50 +16,25 @@
         <div class="row">
             <div class="col-lg-12">
                 <div>
-                    <form name="feedForm" class="form-group" method="post" action="select_feed/">
+                    <span class="text-center"><h3>available news feeds.</h3></span>
+
+                    <form name="feedForm" class="form-group" method="post" action="select-feed/">
                         <div class="form-group">
                             {% for feed in all_feeds %}
-                               {% if feed.url in feeds|string %}
+                                {% if feed.url in feeds|string %}
                                 {% else %}
-                                <button class="btn btn-default" style="border: 1px solid #ffffff; width: 100%;
+                                    <button class="btn btn-warning" style="border: 1px solid #ffffff; width: 100%;
                                     " value="{{ feed.id }}" name="{{ feed.id }}">{{ feed.name }}</button>
                                 {% endif %}
                             {% endfor %}
+                            {% if feeds == all_feeds %}
+                                <h4 class="text-center">No more available feeds</h4>
+                            {% endif %}
                         </div>
 
                     </form>
                 </div>
             </div>
-
-            {% if user.role == 0 %}
-                <div class="col-lg-12">
-                <span class="align-center"><h3>available news feeds.</h3></span>
-                    <form method="post" action="news_config/">
-                        <div class="form-group">
-                            <span class="glyphicon glyphicon-asterisk" style="color:red"></span>
-                            <label for="rssurl">insert a new rss feed</label>
-                            <input type="url" required="required" class="form-control" name="rssurl"
-                                   placeholder="rss feed" value="{{ request.form.rssurl }}">
-                        </div>
-                        <div class="form-group">
-                            <span class="glyphicon glyphicon-asterisk" style="color:red"></span>
-                            <label for="name">Name of rss feed</label>
-                            <input type="text" required="required" class="form-control" name="name"
-                                   placeholder="Name"
-                                   value="{{ request.form.name }}">
-                        </div>
-                        <div class="form-group">
-                            <label for="edition">additional feed edition / category</label>
-                            <input type="text" class="form-control" name="edition" placeholder="Edition"
-                                   value="{{ request.form.edition }}">
-                        </div>
-                        <div class="form-group">
-                            <button type="submit" name="btn1" class="btn btn-default">Submit</button>
-                        </div>
-
-                    </form>
-                </div>
-            {% endif %}
         </div>
 
         {% if error %}
@@ -69,11 +44,11 @@
 
 
     <div class="col-lg-6">
-    <span class="align-center"><h3>Your subcribed news feeds</h3></span>
+        <span class="text-center"><h3>Your subcribed news feeds</h3></span>
         {% for url in feeds %}
             <div class="row">
                 <div class="col-md-12">
-                    <form method="post" action="delete_feed/">
+                    <form method="post" action="delete-feed/">
                         <button type="submit" class="btn btn-primary" style="width: 100%;
                                 border: 1px solid #ffffff;" name="delete" id="delete"
                                 value="{{ url.id }}">

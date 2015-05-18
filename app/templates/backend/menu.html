@@ -1,0 +1,9 @@
+<ul class="nav nav-tabs">
+                <li class=""><a aria-expanded="true" href="{{ url_for('.backend') }}">News</a></li>
+                <li class=""><a aria-expanded="true" href="{{ url_for('backend.profile') }}">Profile</a></li>
+                {% if g.user.role == 0 %}
+                    <li class=""><a aria-expanded="false" href="{{ url_for('backend.site_config') }}">Site Config</a></li>
+                    <li class=""><a aria-expanded="false" href="{{ url_for('backend.feed_config') }}">Feed Config</a></li>
+                    <li class=""><a aria-expanded="false" href="{{ url_for('backend.user_config') }}">User Config</a></li>
+                {% endif %}
+            </ul>

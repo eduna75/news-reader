@@ -1,0 +1,50 @@
+{% block content %}
+    <div class="row">
+        <div class="col-lg-6">
+            <h3>This is the profile page</h3>
+        </div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-lg-12">
+            <p>
+
+            <h3>Hello
+                <small> {{ g.user.nickname }}</small>
+            </h3>
+            here you can change some details</p>
+
+            <form class="form-horizontal" method="POST" action=".">
+                <div class="form-group">
+                    <label class="col-lg-2 control-label" for="Alias">User name</label>
+
+                    <div class="col-lg-6">
+                        <input type="text" class="form-control" value="{{ g.user.nickname }}" placeholder="Your name here" name="Alias">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-2 control-label" for="Email">Email</label>
+
+                    <div class="col-lg-6">
+                        <input type="email" class="form-control" value="{{ g.user.email }}" placeholder="Email address" name="Email">
+                    </div>
+                </div>
+                <input type="submit" class="btn btn-success" value="submit">
+
+                <hr>
+        <p>if you want you can delete your account here.</p>
+                <input type="submit" class="btn btn-danger" id="Delete" name="Delete" value="delete account">
+                <span class="help-block">Warning this can't be undone.</span>
+            </form>
+            <br>
+
+            <p>{% if g.user.status == 1 %}
+                Your account hasn't been confirmed yet.
+            {% elif g.user.status == 2 %}
+                Your account is activated
+            {% else %}
+                Your account is disabled
+            {% endif %}</p>
+        </div>
+    </div>
+{% endblock %}

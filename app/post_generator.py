@@ -26,7 +26,6 @@ def fetch(urls):
                     image = image_url
             except BaseException as e:
                 print e
-            print image
 
             entries = {'title': feeds.entries[i].title, 'summary': feeds.entries[i].summary,
                        'link': feeds.entries[i].link, 'published': feeds.entries[i].published,
@@ -38,6 +37,7 @@ def fetch(urls):
 
 
 def post(url=None):
+    # next is used for as user has no feeds yet.
     if not url:
         url = Feed.query.filter_by(id=1).all()
     return fetch(url)

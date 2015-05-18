@@ -34,12 +34,14 @@ class User(db.Model):
 
 class Feed(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String, unique=True)
-    url = db.Column(db.String, unique=True)
+    name = db.Column(db.String, unique=True, nullable=False)
+    url = db.Column(db.String, unique=True, nullable=False)
+    category_id = db.Column(db.Integer, db.ForeignKey('category.id'))
 
-    def __init__(self, name, url):
+    def __init__(self, name, url, category):
         self.name = name
         self.url = url
+        self.category_id = category
 
     def __repr__(self):
         return '<Feed %r %r>' % (self.name, self.url)
@@ -65,6 +67,7 @@ class Post(db.Model):
 class Category(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50))
+    feed = db.relationship('Feed', backref='cat', lazy='dynamic')
 
     def __init__(self, name):
         self.name = name
@@ -90,8 +93,10 @@ class Language(db.Model):
     english = db.Column(db.String(120), unique=True)
     language = db.Column(db.String(8), unique=True)
 
-    def __init__(self, name):
-        self.name = name
+    def __init__(self, title, english, language):
+        self.title = title
+        self.english = english
+        self.language = language
 
     def __repr__(self):
-        return '<Language %r>' % self.name
+        return '<Language %r %r %r>' % (self.title, self.english, self.language)

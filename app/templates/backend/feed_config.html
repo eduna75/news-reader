@@ -1,0 +1,74 @@
+<div class="well">
+    <h2>Feed Configuration</h2>
+</div>
+
+{% for message in get_flashed_messages() %}
+    <div class="bs-component">
+        <div class="alert alert-dismissable alert-success">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <p>{{ message }}</p>
+        </div>
+    </div>
+{% endfor %}
+
+<div class="row">
+    <div class="col-lg-12">
+        <form method="post" action="/backend/news-config/">
+            <div class="form-group">
+                <span class="glyphicon glyphicon-asterisk" style="color:red"></span>
+                <label for="rssurl">insert a new rss feed</label>
+                <input type="url" required="required" class="form-control" name="rssurl"
+                       placeholder="rss feed" value="{{ request.form.rssurl }}">
+            </div>
+            <div class="form-group">
+                <span class="glyphicon glyphicon-asterisk" style="color:red"></span>
+                <label for="name">Name of rss feed</label>
+                <input type="text" required="required" class="form-control" name="name"
+                       placeholder="Name"
+                       value="{{ request.form.name }}">
+            </div>
+            <div class="form-group">
+                <label for="edition">additional feed edition / category</label>
+                <select class="form-control" name="category">
+                    <option value="">Select</option>
+                    {% for category in category %}
+                        <option value="{{ category.id }}">{{ category.name|safe }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <button type="submit" name="btn1" class="btn btn-default">Submit</button>
+            </div>
+
+        </form>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-6">
+        <table class="table table-condensed table-striped">
+            <thead>
+            <tr>
+                <td>ID</td>
+                <td>Name</td>
+                <td>category</td>
+                <td>url</td>
+            </tr>
+            </thead>
+            <form class="form-horizontal" method="POST" action=".">
+                {% for feeds in all_feeds %}
+                    <tr>
+                        <td>{{ feeds.id }}</td>
+                        <td>{{ feeds.name }}</td>
+                        <td>{{ feeds.cat }}</td>
+                        <td><a href="{{ feeds.url }}" target="_blank">{{ feeds.url }}</a></td>
+                        <td>
+                            <button class="btn btn-sm btn-default" value="{{ feeds.id }}" id="=delete" name="Delete">
+                                Delete
+                            </button>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </form>
+        </table>
+    </div>
+</div>
