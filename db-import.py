@@ -498,9 +498,9 @@ try:
     db.execute('INSERT INTO feed(name, url, category, country, language) VALUES (?,?,?,?,?)',
                ('ESA Netherlands', 'http://www.esa.int/rssfeed/Netherlands', 15, 125, 114))
 except BaseException as e:
-    print e
+    print e, ' pushing feed failed'
 
-db.execute('INSERT INTO user(nickname, email, password, role, status) VALUES (?,?,?,?)',
+db.execute('INSERT INTO user(nickname, email, password, role, status) VALUES (?,?,?,?,?)',
            ('Admin', 'admin@busieslist.com',
             generate_password_hash('admin'), 0, 2))
 db.commit()
