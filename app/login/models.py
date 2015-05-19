@@ -36,12 +36,16 @@ class Feed(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, unique=True, nullable=False)
     url = db.Column(db.String, unique=True, nullable=False)
-    category_id = db.Column(db.Integer, db.ForeignKey('category.id'))
+    category = db.Column(db.Integer, db.ForeignKey('category.id'))
+    country = db.Column(db.Integer, db.ForeignKey('country.id'))
+    language = db.Column(db.Integer, db.ForeignKey('language.id'))
 
-    def __init__(self, name, url, category):
+    def __init__(self, name, url, category, country, language):
         self.name = name
         self.url = url
-        self.category_id = category
+        self.category = category
+        self.country = country
+        self.language = language
 
     def __repr__(self):
         return '<Feed %r %r>' % (self.name, self.url)
@@ -66,7 +70,7 @@ class Post(db.Model):
 
 class Category(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(50))
+    name = db.Column(db.String(50), unique=True)
     feed = db.relationship('Feed', backref='cat', lazy='dynamic')
 
     def __init__(self, name):
@@ -79,6 +83,7 @@ class Category(db.Model):
 class Country(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), unique=True)
+    feed = db.relationship('Feed', backref='count', lazy='dynamic')
 
     def __init__(self, name):
         self.name = name
@@ -92,6 +97,7 @@ class Language(db.Model):
     title = db.Column(db.String(120), unique=True)
     english = db.Column(db.String(120), unique=True)
     language = db.Column(db.String(8), unique=True)
+    feed = db.relationship('Feed', backref='lang', lazy='dynamic')
 
     def __init__(self, title, english, language):
         self.title = title

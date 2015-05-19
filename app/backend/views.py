@@ -94,11 +94,13 @@ def news_config():
 
     error = None
     if request.method == 'POST':
+        print request.form
         try:
             if request.form['rssurl'] is None or '' and request.form['name'] is None or '':
                 error = "you didn't fill in all the fields: "
             else:
-                link = Feed(name=request.form['name'], url=request.form['rssurl'], category=request.form['category'])
+                link = Feed(name=request.form['name'], url=request.form['rssurl'], category=request.form['category'],
+                            country=request.form['country'], language=request.form['language'])
                 db.session.add(link)
                 db.session.commit()
 
@@ -164,6 +166,8 @@ def feed_config():
     page = 'backend/feed_config.html'
     all_feeds = Feed.query.all()
     category = Category.query.all()
+    country = Country.query.all()
+    language = Language.query.all()
 
     if request.method == 'POST':
         if 'Delete' in request.form:
@@ -172,4 +176,5 @@ def feed_config():
             db.session.commit()
             flash("the feed has been deleted!")
             return redirect(url_for('backend.feed_config'))
-    return render_template('backend/config.html', page=page, all_feeds=all_feeds, category=category)
+    return render_template('backend/config.html', page=page, all_feeds=all_feeds, category=category, country=country,
+                           language=language)

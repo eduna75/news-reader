@@ -27,14 +27,40 @@
                        placeholder="Name"
                        value="{{ request.form.name }}">
             </div>
-            <div class="form-group">
-                <label for="edition">additional feed edition / category</label>
-                <select class="form-control" name="category">
-                    <option value="">Select</option>
-                    {% for category in category %}
-                        <option value="{{ category.id }}">{{ category.name|safe }}</option>
-                    {% endfor %}
-                </select>
+            <div class="row">
+                <div class="col-md-3 col-lg-4">
+                    <div class="form-group">
+                        <label for="edition">additional feed edition / category</label>
+                        <select class="form-control" name="category">
+                            <option value="">Select</option>
+                            {% for category in category %}
+                                <option value="{{ category.id }}">{{ category.name|safe }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-3 col-lg-4">
+                    <div class="form-group">
+                        <label for="country">Country</label>
+                        <select class="form-control" name="country">
+                            <option value="">Select</option>
+                            {% for country in country %}
+                                <option value="{{ country.id }}">{{ country.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-3 col-lg-4">
+                    <div class="form-group">
+                        <label for="language">Language</label>
+                        <select class="form-control" name="language">
+                            <option value="">Select</option>
+                            {% for language in language %}
+                                <option value="{{ language.id }}">{{ language.language }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
             </div>
             <div class="form-group">
                 <button type="submit" name="btn1" class="btn btn-default">Submit</button>
@@ -44,13 +70,15 @@
     </div>
 </div>
 <div class="row">
-    <div class="col-lg-6">
+    <div class="col-lg-12">
         <table class="table table-condensed table-striped">
             <thead>
             <tr>
                 <td>ID</td>
                 <td>Name</td>
                 <td>category</td>
+                <td>Country</td>
+                <td>Language</td>
                 <td>url</td>
             </tr>
             </thead>
@@ -59,7 +87,9 @@
                     <tr>
                         <td>{{ feeds.id }}</td>
                         <td>{{ feeds.name }}</td>
-                        <td>{{ feeds.cat }}</td>
+                        <td>{{ feeds.cat.name }}</td>
+                        <td>{{ feeds.count.name }}</td>
+                        <td>{{ feeds.lang.language }}</td>
                         <td><a href="{{ feeds.url }}" target="_blank">{{ feeds.url }}</a></td>
                         <td>
                             <button class="btn btn-sm btn-default" value="{{ feeds.id }}" id="=delete" name="Delete">
