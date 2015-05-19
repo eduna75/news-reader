@@ -477,10 +477,6 @@ language = [
     " मैथिली "
 ]
 
-feeds = [
-    'http://www.esa.int/rssfeed/Netherlands'
-]
-
 db = sqlite3.connect('app.db')
 db.text_factory = str
 for t in topic:
@@ -498,8 +494,11 @@ for t in language:
     db.execute('INSERT INTO language(language) VALUES (?)', (t.strip(),))
     db.commit()
 
-db.execute('INSERT INTO feed(name, url, category, country, language) VALUES (?,?,?,?,?)',
-           ('ESA Netherlands', feeds, 15, 125, 114))
+try:
+    db.execute('INSERT INTO feed(name, url, category, country, language) VALUES (?,?,?,?,?)',
+               ('ESA Netherlands', 'http://www.esa.int/rssfeed/Netherlands', 15, 125, 114))
+except BaseException as e:
+    print e
 
 db.execute('INSERT INTO user(nickname, email, password, role, status) VALUES (?,?,?,?)',
            ('Admin', 'admin@busieslist.com',
