@@ -16,21 +16,13 @@ def fetch(urls):
     for links in urls[0:1]:
         feeds = feedparser.parse(links.url)
         for i in xrange(0, len(feeds.entries)):
-            image = None
-            value = str(feeds.entries[i].links)
-            try:
-                image_url = re.search('(?P<url>http?://[^\s]+(png|jpeg|jpg))', value).group("url")
-                if 'NoneType' in image_url:
-                    image = None
-                else:
-                    image = image_url
-            except BaseException as e:
-                print e
+            value = str(feeds.entries[i])
+            image_url = re.search('(?P<url>http?://[^\s]+(png|jpeg|jpg))', value).group("url")
 
             entries = {'title': feeds.entries[i].title, 'summary': feeds.entries[i].summary,
                        'link': feeds.entries[i].link, 'published': feeds.entries[i].published,
                        'publisher': feeds.feed.title, 'published_parsed': time_ago(feeds.entries[i].published_parsed),
-                       'image': image}
+                       'image': image_url}
             feed.append(entries)
 
     return feed
