@@ -13,13 +13,15 @@ def time_ago(data):
 
 def fetch(urls):
     feed = []
+    expression = '(?P<url>http?://[^\s]+(png|jpeg|jpg|gif))'
     for links in urls[0:1]:
         feeds = feedparser.parse(links.url)
         for i in xrange(0, len(feeds.entries)):
 
             value = str(feeds.entries[i])
             try:
-                image_url = re.search('(?P<url>http?://[^\s]+(png|jpeg|jpg|gif))', value).group("url")
+                image_url = re.search(expression, value).group("url") if \
+                    re.search(expression, value) else None
             except BaseException as e:
                 print e
                 image_url = None
