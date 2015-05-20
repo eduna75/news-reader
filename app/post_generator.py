@@ -1,5 +1,6 @@
 import time
-from app.login.models import Feed
+
+from app.models import Feed
 import feedparser
 import re
 

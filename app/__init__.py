@@ -13,4 +13,4 @@ app.register_blueprint(backend_node)
 app.config.from_object(os.environ['APP_SETTINGS'])
 
 
-from app.login.models import *
+from app.models import *

@@ -44,6 +44,14 @@
                             <td>users url:</td>
                             <td>{{ users.url }}</td>
                         </tr>
+                        <tr>
+                            <td>user signup date:</td>
+                            {% if users.signup_date == None %}
+                                <td><p>Not specified</p></td>
+                            {% else %}
+                            <td>{{ users.signup_date.strftime('%d %b %Y %H:%M') }}</td>
+                            {% endif %}
+                        </tr>
                     </table>
                     {% if users.role == 0 %}
                         <p style="color: #8b0000">Can't delete this account</p>

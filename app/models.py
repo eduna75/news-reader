@@ -1,6 +1,6 @@
-from app import db
-from app.login import constansts as USER
 from datetime import datetime
+from app import db
+from app import constansts as USER
 
 
 class User(db.Model):
@@ -11,11 +11,15 @@ class User(db.Model):
     role = db.Column(db.SmallInteger, default=USER.USER)
     status = db.Column(db.SmallInteger, default=USER.NEW)
     urls = db.relationship('Feed', secondary='urls', backref=db.backref('users', lazy='dynamic'))
+    signup_date = db.Column(db.DateTime)
 
-    def __init__(self, nickname, email, password=None):
+    def __init__(self, nickname, email, password=None, signup_date=None):
         self.nickname = nickname
         self.email = email
         self.password = password
+        if signup_date is None:
+            signup_date = datetime.utcnow()
+        self.signup_date = signup_date
 
     def get_status(self):
         return USER.STATUS[self.status]

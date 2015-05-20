@@ -1,6 +1,6 @@
 from app import db
 from os import walk
-from app.login.models import User, Feed, Category, Country, Language
+from app.models import User, Feed, Category, Country, Language
 from flask import Blueprint, render_template, g, request, redirect, url_for, flash, session
 from app.db_connect import DBConnect as DBc
 

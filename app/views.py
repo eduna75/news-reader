@@ -1,7 +1,7 @@
 from dateutil import parser
 from app import app, db
 from app.forms import LoginForm, RegistrationForm
-from app.login.models import User, Feed
+from app.models import User, Feed
 from app.post_generator import post
 from flask import render_template, request, url_for, redirect, session, flash, g, send_from_directory
 from app.db_connect import DBConnect as DBc
