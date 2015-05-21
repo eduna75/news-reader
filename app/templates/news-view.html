@@ -1,5 +1,9 @@
 <div id="postlist" class="panel panel-default">
-    <div class="panel-heading">{{ feeds[0].publisher }}</div>
+    {% if feeds[0] %}
+        <div class="panel-heading text-center">{{ feeds[0].publisher }}</div>
+    {% else %}
+        <h4>Feed isn't available at this moment <small> Check again later.</small></h4>
+    {% endif %}
 
     {% for feed in feeds %}
         <div class="panel">
