@@ -2,7 +2,7 @@
     {% if feeds[0] %}
         <div class="panel-heading text-center">{{ feeds[0].publisher }}</div>
     {% else %}
-        <h4>Feed isn't available at this moment <small> Check again later.</small></h4>
+        <h4 class="text-center">Feed isn't available at this moment <small> Check again later.</small></h4>
     {% endif %}
 
     {% for feed in feeds %}
