@@ -1,8 +1,8 @@
 from flask import Flask
-from flask.ext.sqlalchemy import SQLAlchemy
+from flask_sqlalchemy import SQLAlchemy
 import os
 
-app = Flask(__name__, static_folder='')
+app = Flask(__name__, static_folder='static/')
 db = SQLAlchemy(app)
 
 from app import views
