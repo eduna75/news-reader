@@ -6,3 +6,4 @@ news-reader.db
 db_backup
 app.db
 migrations
+*.pyc
