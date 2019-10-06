@@ -18,6 +18,8 @@ class BaseConfig(object):
 class DevelopmentConfig(BaseConfig):
     DEVELOPMENT = True
     DEBUG = True
+    # SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(_basedir, 'news-reader.db')
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 
 class ProductionConfig(BaseConfig):
